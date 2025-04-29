@@ -85,6 +85,7 @@ function onStart(){
         </div>
     </section>
 
+    {% if highlights|length > 0 %}
     <section class="container-fluid news-section" data-aos="fade-up" data-aos-duration="800">
         <div class="container news-head-section">
             <div class="row">
@@ -96,7 +97,7 @@ function onStart(){
                     <div class="button-row row">
                         <a class="btn btn-social prev-arrow" aria-label="Previous slide"></a>
                         <a class="btn btn-social next-arrow" aria-label="Next slide"></a>
-                        <a href="/news" class="btn btn-all-news">All news</a>
+                        <a href="/news" class="btn btn-all-news desktop-all-news">All news</a>
                     </div>
                 </div>
             </div>
@@ -119,15 +120,21 @@ function onStart(){
                     <div class="news-back">
                         <div class="back-content">
                             <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                            <p class="news-excerpt">{{ highlight.content|striptags|length > 255 ? highlight.content|striptags|slice(0, 255) ~ '...' : highlight.content|striptags }}</p>
-                            <a href="/news/{{highlight.slug}}" class="read-more">Read more <span></span></a>
-                            <div class="news-date">{{ highlight.published_at|date('d.m.Y') }}</div>
+                            <a href="/news/{{highlight.slug}}" class="read-more btn-primary home-btn">Read more <span></span></a>
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+        <div class="container mobile-all-news-container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <a href="/news" class="btn btn-all-news mobile-all-news">All news</a>
+                </div>
+            </div>
+        </div>
     </section>
+    {% endif %}
 
     {% partial 'subscribe-section' %}

@@ -423,7 +423,6 @@
     cursor: pointer;
 }
 
-
 #menuToggle{
     display: none;
 }
@@ -557,11 +556,32 @@
 
     #menu{
         .search_field{
-            width: 52px;
-            margin: 0 auto;
-            background-size: contain;
+            width: 100%;
+            margin: 30px auto 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+            
+            a.mobile-search-btn {
+                display: block;
+                background: url('../../assets/images/search_white.svg') center no-repeat;
+                background-size: contain;
+                width: 33px !important;
+                height: 33px !important;
+                opacity: 0.9;
+                
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
-
 
         .dropdown-menu{
             padding-left: 0!important;
@@ -757,6 +777,7 @@
     overflow: hidden;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     background: #fff;
+    width: 100%;
 }
 
 .search_input {
@@ -767,6 +788,7 @@
     color: #333 !important;
     font-size: 16px;
     transition: all 0.3s ease;
+    flex: 1 1 auto;
 
     &::placeholder {
         color: #999;
@@ -784,7 +806,7 @@
     right: 0;
     background: @link-color;
     border: none;
-    padding: 0 15px;
+    padding: 0;
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -792,6 +814,9 @@
     align-items: center;
     justify-content: center;
     min-width: 46px;
+    width: 46px;
+    height: 100%;
+    flex: 0 0 46px;
 
     &:hover {
         opacity: 0.9;
@@ -886,19 +911,34 @@
         margin: 0 0 20px;
     }
 
+    .search-input-wrapper {
+        display: flex;
+        align-items: stretch;
+        height: 46px;
+        width: 100%;
+    }
+
     .search_input {
-        padding: 12px 40px 12px 16px;
+        padding: 12px 16px;
         font-size: 15px;
+        height: 100%;
+        flex: 1 1 auto;
+        width: calc(100% - 46px);
     }
 
     .search-submit {
-        right: 10px;
-        width: 32px;
-        height: 32px;
+        width: 46px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        flex: 0 0 46px;
 
         svg {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
         }
     }
 

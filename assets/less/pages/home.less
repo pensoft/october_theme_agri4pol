@@ -119,6 +119,9 @@
     }
 
     .number {
+        position: relative;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         font-size: 33px;
         font-weight: 700;
         color: @green-color;
@@ -128,6 +131,21 @@
         width: 150px;
         height: 150px;
         display: flex;
+        
+        // Remove the underline effect by setting display: none
+        &:after {
+            display: none;
+        }
+    }
+
+    &:hover .number {
+        transform: scale(1.1);
+        color: darken(#3D7F18, 10%);
+        
+        // Remove the width animation since the element is now display: none
+        &:after {
+            width: 0;
+        }
     }
 
     .number-description {
@@ -203,6 +221,30 @@
     background-color: #f8f8f8;
     position: relative;
     overflow: hidden;
+
+    // Style for the mobile news button container
+    .mobile-all-news-container {
+        display: none;
+        margin-top: 30px;
+        
+        .breakpoint-large-down({
+            display: block;
+        });
+    }
+    
+    // Desktop vs Mobile All News button styles
+    .desktop-all-news {
+        .breakpoint-large-down({
+            display: none;
+        });
+    }
+    
+    .mobile-all-news {
+        padding: 10px 25px;
+        font-size: 14px;
+        max-width: 200px;
+        margin: 0 auto;
+    }
 
     .news-head-section{
         h2{
@@ -350,6 +392,7 @@
                 transition: box-shadow 0.3s ease, transform 0.3s ease;
                 padding: 10px;
                 position: relative;
+                border-bottom: 3px solid #EFD516;
 
                 .news-image {
                     height: 200px;

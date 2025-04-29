@@ -29,6 +29,7 @@ numberOfLevels = 2
             </li>
         </ul>
     </div>
+    
     <div class="search-modal-overlay" id="searchModalOverlay">
         <div class="search-modal">
             <div class="search-modal-header">
@@ -41,7 +42,7 @@ numberOfLevels = 2
                 <form class="search-form" action="{{ url('search')}}" method="get">
                     <div class="search-input-wrapper">
                         <input class="form-control search_input" name="q" type="text" autocomplete="on" placeholder="Search for pollinators, agriculture, biodiversity...">
-                        <button type="submit" class="search-submit">
+                        <button type="submit" class="search-submit" style="position: absolute; right: 0; top: 0; bottom: 0; width: 46px; min-width: 46px; z-index: 2; border-radius: 0 8px 8px 0;">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M19 19L14.65 14.65M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
