@@ -1,0 +1,180 @@
+url = "/media-center"
+layout = "default"
+title = "Media center"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+header_image = "media.jpg"
+
+[siteSearchInclude]
+==
+<?php
+use Pensoft\Media\Models\MediaLogos;
+use Pensoft\Media\Models\Flyers;
+use Pensoft\Media\Models\Presentations;
+use Pensoft\Media\Models\Videos;
+use Pensoft\Media\Models\Graphic;
+use Pensoft\Media\Models\Documents;
+use System\Models\File;
+
+function onStart(){
+	$this['logos'] =  MediaLogos::get();
+	$this['flyers'] =  Flyers::get();
+	$this['presentations'] =  Presentations::get();
+	$this['videos'] =  Videos::get();
+	$this['images'] =  Graphic::get();
+	$this['documents'] =  Documents::get();
+}
+
+
+function onDownloadFile(){
+	$file = File::find(post('id'));
+	$pathToFile = $file->getLocalPath();
+$fileName = $file->file_name;
+$fileType = $file->content_type;
+$headers = [
+'HTTP/1.1 200 OK',
+'Pragma: public',
+'Content-Type: '.$fileType,
+'Content-Type: application/force-download'
+];
+
+return Response::download($pathToFile, $fileName, $headers);
+}
+?>
+==
+{% component 'siteSearchInclude' %}
+
+<div class="container-fluid menu-container">
+    <div class="header-bg">
+        <h1>Media center</h1>
+    </div>
+    <div class="container">
+        <div class="row media_tabs">
+                {% if logos.count() %}<a href="#brand-kit" class="about-menu-item">Brand kit</a>{% endif %}
+                {% if flyers.count() %}<a href="#project-materials" class="about-menu-item">Project materials</a>{% endif %}
+                {% if videos.count() %}<a href="#videos" class="about-menu-item">Videos</a>{% endif %}
+                {% if images.count() %}<a href="#images" class="about-menu-item">Images</a>{% endif %}
+
+        </div>
+
+        <!--tabs content	-->
+        {% if logos.count() %}
+        <div class="row card-container-row start-xs logo" id="brand-kit">
+            {% for record in logos %}
+            {# Use spaceless tag to remove spaces inside the A tag. #}
+            {% spaceless %}
+            {% if record.logo_image %}
+            <div class="col-md-4 col-xs-12 center-xs mb-4">
+                <div class="logo_container">
+                    <div class="text-center">
+                        <span class="card_image_container" style="background: url({{record.logo_image.thumb(321,217,{'mode':'crop'})}}) center center no-repeat;" title="{{record.name}}"></span>
+                        <span class="card_title" style="min-height: 100px;">{{record.name}}</span>
+                    </div>
+                    <div class="col-xs-12">
+                            {% if record.file_jpg %}
+                            {{form_open({ request: 'onDownloadFile' }) }}
+                            <input type="hidden" value="{{record.file_jpg.id}}" name="id">
+                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> JPG</button>
+                            {{ form_close() }}
+
+                            {% endif %}
+                            {% if record.file_png %}
+                            {{form_open({ request: 'onDownloadFile' }) }}
+                            <input type="hidden" value="{{record.file_png.id}}" name="id">
+                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> PNG</button>
+                            {{ form_close() }}
+                            {% endif %}
+                            {% if record.file_eps %}
+                            {{form_open({ request: 'onDownloadFile' }) }}
+                            <input type="hidden" value="{{record.file_eps.id}}" name="id">
+                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> SVG</button>
+                            {{ form_close() }}
+                            {% endif %}
+
+                            {% if record.file_pdf %}
+                            <a href="{{record.file_pdf.path}}" target="_blank" class="btn btn-primary"><i class="pr p-download"></i> PDF</a>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% endspaceless %}
+
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+        {% if flyers.count() %}
+        <div class="row card-container-row start-xs flyer" id="project-materials" style="display: none;">
+            {% for record in flyers %}
+            {# Use spaceless tag to remove spaces inside the A tag. #}
+            {% spaceless %}
+            {% if record.flyer_image %}
+            <div class="col-md-4 col-xs-12 center-xs mb-4">
+                <div class="flyer_container">
+                    <div class="text-center">
+                        <span class="card_image_container" style="background: url({{record.flyer_image.thumb(321,217,{'mode':'crop'})}}) center center no-repeat;" title="{{record.name}}"></span>
+                        <span class="card_title" style="min-height: 100px;">{{record.name}}</span>
+                    </div>
+                    {% if record.file %}
+                    <div class="col-xs-12">
+                        <div class="text-center">
+
+                            {{form_open({ request: 'onDownloadFile' }) }}
+                            <input type="hidden" value="{{record.file.id}}" name="id">
+                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> Download</button>
+                            {{ form_close() }}
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% endspaceless %}
+
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+
+        {% if videos.count() %}
+        <div class="row card-container-row" id="videos" style="display: none;">
+            {% for record in videos %}
+            <div class="col-md-6 col-xs-12 mb-4">
+                <div class="videos_container">
+                    <div class="text-center">
+                        {% if record.file %}
+                            <video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
+                            {{form_open({ request: 'onDownloadFile' }) }}
+                            <input type="hidden" value="{{record.file.id}}" name="id">
+                            <button type="submit" class="btn btn-primary" data-attach-loading>Download</button>
+                            {{ form_close() }}
+                        {% endif %}
+
+                        {% if record.youtube_url %}
+                            <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="{{record.youtube_url}}" width="100%" height="281"></iframe>
+                        {% endif %}
+
+                        {% if record.vimeo_url %}
+                            <iframe width="100%" height="281" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    src="{{record.vimeo_url}}">
+                            </iframe>
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-12">
+                        <p class="card_title">{{record.name}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</div>

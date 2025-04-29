@@ -1,0 +1,811 @@
+/**
+ * Animation styles for AGRI4POL
+ * Contains all animation transitions, keyframes, and effects
+ * Component-specific hover states are in master.less
+ */
+
+// Smooth page transitions
+.content-wrapper {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+// Letter animation styles for header
+.letter-animation-wrapper {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    perspective: 1000px;
+}
+
+.letter-animation {
+    display: inline-block;
+    opacity: 0;
+    position: relative;
+    will-change: transform, opacity;
+
+    // Highlight effect for certain letters
+    &:nth-child(3n+1) {
+        color: darken(#3D7F18, 5%);
+    }
+
+    // Special effect for spaces to ensure consistent spacing
+    &:empty {
+        width: 0.25em;
+    }
+}
+
+// Subtle background animation for hero section
+.intro-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    animation: subtle-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes subtle-pulse {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+// Vision section animations
+.vision-section {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    .video-background {
+        transition: transform 0.3s ease-out;
+        will-change: transform;
+    }
+    
+    .white-box {
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
+                    box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        will-change: transform, box-shadow;
+        
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        // White box reveal animation
+        opacity: 0;
+        transform: translateY(30px);
+        animation: reveal-box 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: 0.3s;
+    }
+    
+    .vision-title {
+        position: relative;
+        
+        // Remove the underline effect
+        &:after {
+            display: none; // This removes the underline
+        }
+        
+        // Add reveal animation for title
+        opacity: 0;
+        transform: translateY(20px);
+        animation: reveal-text 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: 0.8s;
+    }
+
+    .vision-text {
+        opacity: 0;
+        transform: translateY(15px);
+        animation: reveal-text 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: 1.2s;
+    }
+    
+    .progress-bar {
+        position: relative;
+        overflow: hidden;
+        
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+            animation: progress-shine 3s infinite linear;
+        }
+
+        // Add animation for progress bar
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: reveal-progress 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation-delay: 1.6s;
+    }
+}
+
+@keyframes progress-shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+// Scroll indicator animation
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 15px;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 6px;
+        height: 6px;
+        margin-left: -3px;
+        background-color: #fff;
+        border-radius: 50%;
+        animation: scrollDown 2s infinite;
+    }
+}
+
+@keyframes scrollDown {
+    0% { 
+        opacity: 0;
+        transform: translateY(0);
+    }
+    30% { 
+        opacity: 1; 
+    }
+    60% { 
+        opacity: 1; 
+    }
+    100% { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+// Numbers section animations
+.numbers {
+    .number-wrapper {
+        position: relative;
+        
+        .number-circle {
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        &:hover .number-circle {
+            transform: scale(1.1);
+            opacity: 0.5;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .number {
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background-color: #EFD516;
+                transition: width 0.3s ease;
+            }
+        }
+        
+        &:hover .number {
+            transform: scale(1.1);
+            color: darken(#3D7F18, 10%);
+            
+            &:after {
+                width: 30px;
+            }
+        }
+    }
+    
+    .number-description {
+        .title {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        &:hover .title {
+            transform: translateY(-3px);
+            color: darken(#3D7F18, 10%);
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(179, 191, 169, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(179, 191, 169, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(179, 191, 169, 0);
+    }
+}
+
+// Button animations and effects
+// Ripple button effect
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    z-index: 1;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+// Button hover glow effect
+.btn {
+    &.btn-primary, &.btn-subscribe, &.btn-all-news, &.btn-social {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        
+        // For button hover glow effect - add a pseudo-element behind the content
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.2) 0%,
+                transparent 70%
+            );
+            opacity: 0;
+            transform: translate3d(-50%, -50%, 0) scale(0.8);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        &:hover::after {
+            opacity: 1;
+            transform: translate3d(-50%, -50%, 0) scale(1);
+        }
+    }
+}
+
+// Reset button icon-related styles to ensure they're visible
+.btn-social::before,
+.btn-subscribe::before {
+    display: block !important;
+    position: static !important;
+    opacity: 1 !important;
+    transform: none !important;
+    z-index: 10 !important;
+    width: auto !important;
+    height: auto !important;
+    background-color: transparent !important;
+}
+
+// Restore the specific dimensions for certain buttons
+.btn-social::before {
+    width: 23px !important;
+    height: 23px !important;
+}
+
+.btn-subscribe::before {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+// Special handling for arrow buttons
+.prev-arrow::before, 
+.next-arrow::before {
+    display: block !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    z-index: 10 !important;
+    width: 14px !important;
+    height: 14px !important;
+    background-color: transparent !important;
+}
+
+.prev-arrow::before {
+    transform: translate(-50%, -50%) !important;
+}
+
+.next-arrow::before {
+    transform: translate(-50%, -50%) rotate(180deg) !important;
+}
+
+// Enhanced arrow hover animation for all news button
+.btn-all-news {
+    &::after {
+        position: absolute;
+        right: 20px;
+        content: '→';
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    
+    &:hover {
+        padding-right: 40px;
+        
+        &::after {
+            opacity: 1;
+            transform: translateX(0);
+            animation: arrowBounce 1s ease infinite;
+        }
+    }
+}
+
+@keyframes arrowBounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+}
+
+// 3D tilt effect
+.btn-primary, .btn-all-news {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transform: perspective(800px) rotateX(0) rotateY(0);
+}
+
+// News card back content animations
+.news-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #EFD516;
+    opacity: 0;
+    z-index: 5;
+    padding: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform-origin: center;
+    transform: scale(1);
+    transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+    border-radius: 8px;
+    visibility: hidden;
+
+    .back-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        opacity: 1;
+        transition: opacity 0.25s ease 0.05s;
+
+        .news-title {
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            transform: translateY(15px);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        }
+
+        .news-excerpt {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            transform: translateY(15px);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+            max-height: 130px;
+
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background: linear-gradient(to bottom,
+                    transparent 0%,
+                    transparent 70%,
+                    rgba(239, 213, 22, 0.8) 100%);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            }
+        }
+
+        // Enhanced read more link effect
+        .read-more {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 10px;
+            transform: translateY(15px);
+            transition: all 0.4s ease-out;
+            position: relative;
+            padding: 0;
+            margin-left: 0;
+            opacity: 0;
+
+            // Arrow indicator with enhanced animation
+            span {
+                // font-size: 18px;
+                margin-left: 4px;
+                display: inline-block;
+                transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                color: inherit;
+                &:after{
+                    content: '';
+                    display: inline-block;
+                    background: url('../../assets/images/read-more-news.svg') no-repeat center center;
+                    background-size: 9px;
+                    width: 9px;
+                    height: 9px;
+                }
+            }
+            
+            &:hover {
+                span:after {
+                    background: url('../../assets/images/arrow-right.svg') no-repeat center center;
+                }
+            }
+
+            &.animated {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            &:hover {
+                color: #4d8c21; // Green text on hover
+                
+                span {
+                    transform: translateX(5px); // Increased arrow movement
+                }
+            }
+        }
+
+        .news-date {
+            color: rgba(51, 51, 51, 0.7);
+            font-size: 14px;
+            align-self: flex-start;
+            transform: translateY(15px);
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            opacity: 0;
+
+            &.animated {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+// Enhanced news item hover effects
+.news-item {
+    transition: transform 0.4s ease-out,
+                box-shadow 0.4s ease-out;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        
+        .news-back {
+            opacity: 1;
+            visibility: visible;
+
+            .back-content {
+                opacity: 1;
+
+                .news-title {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+                
+                .news-excerpt {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                .news-excerpt::after {
+                    opacity: 1;
+                }
+
+                .read-more {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                .news-date {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+        
+        .news-image img {
+            transform: scale(1.05);
+            filter: brightness(0.92);
+        }
+    }
+
+    .news-image {
+        overflow: hidden;
+        
+        img {
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
+        }
+    }
+
+    .news-content {
+        transition: opacity 0.25s ease-out;
+    }
+
+    &:hover .news-content {
+        opacity: 0;
+    }
+}
+
+// Subscribe section particles and effects
+.subscribe-section {
+    position: relative;
+    overflow: hidden;
+
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .subscribe-text p {
+        animation: fade-in 1s ease-out;
+    }
+    
+    .btn-subscribe {
+        animation: fade-in 1s ease-out 0.2s backwards;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+    }
+}
+
+.particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.particle-1 {
+    width: 80px;
+    height: 80px;
+    top: -20px;
+    left: 10%;
+    animation: float-particle 12s infinite ease-in-out;
+}
+
+.particle-2 {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 15%;
+    animation: float-particle 8s infinite ease-in-out reverse;
+}
+
+.particle-3 {
+    width: 60px;
+    height: 60px;
+    top: 40%;
+    left: 25%;
+    animation: float-particle 15s infinite ease-in-out 2s;
+}
+
+.particle-4 {
+    width: 30px;
+    height: 30px;
+    top: 30%;
+    right: 30%;
+    animation: float-particle 10s infinite ease-in-out 1s;
+}
+
+.particle-5 {
+    width: 50px;
+    height: 50px;
+    bottom: -10px;
+    left: 40%;
+    animation: float-particle 13s infinite ease-in-out 3s;
+}
+
+@keyframes float-particle {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px);
+    }
+    50% {
+        transform: translateY(10px) translateX(20px);
+    }
+    75% {
+        transform: translateY(15px) translateX(-10px);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+// Button specific animations
+@keyframes iconWiggle {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+}
+
+@keyframes buttonPulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 213, 22, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 213, 22, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 213, 22, 0); }
+}
+
+@keyframes buttonShineDiagonal {
+    from {
+        background-position: 200% 0;
+    }
+    to {
+        background-position: -200% 0;
+    }
+}
+
+// Bell ringing animation
+@keyframes bellRing {
+    0% { transform: rotate(0); }
+    10% { transform: rotate(15deg); }
+    20% { transform: rotate(-13deg); }
+    30% { transform: rotate(10deg); }
+    40% { transform: rotate(-8deg); }
+    50% { transform: rotate(5deg); }
+    60% { transform: rotate(-3deg); }
+    80%, 100% { transform: rotate(0); }
+}
+
+// Simple bell icon (no animation when static)
+.bell-icon {
+    transform-origin: top center;
+    will-change: transform;
+    transform: rotate(0);
+}
+
+// Simple animation on hover - ring bell once
+.btn-subscribe:hover .bell-icon {
+    animation: bellRing 1s ease-out forwards;
+}
+
+// AOS animation enhancements 
+[data-aos] {
+    pointer-events: none;
+}
+[data-aos].aos-animate {
+    pointer-events: auto;
+}
+
+// Exclude navigation and social buttons from transformations
+.btn-social img, .prev-arrow img, .next-arrow img,
+.btn-social svg, .prev-arrow svg, .next-arrow svg {
+    transition: none !important;
+}
+
+// Add reduced motion support for accessibility
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+// New animations for vision section reveal
+@keyframes reveal-box {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes reveal-text {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes reveal-progress {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}

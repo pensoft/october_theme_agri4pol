@@ -1,0 +1,47 @@
+url = "/partners"
+layout = "default"
+title = "Partners"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+==
+<?php
+use Pensoft\Partners\Models\Partners;
+
+function onStart(){
+	$this['partners'] =  Partners::where('type', 1)->get();
+}
+
+function onSinglePartner(){
+    $this['partners'] = [];
+    if(post('partner_id')){
+        $this['partners'] =  Partners::where('id', post('partner_id'))->where('type', 1)->get();
+    }
+}
+
+?>
+==
+
+<div class="container-fluid menu-container">
+    <div class="header-bg">
+        <h1>Partners</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12 partners_list">
+                    {% for partner in partners %}
+                    <a class="parener_logo" onclick="onCustomSinglePartner({{partner.id}});" title="{{partner.instituion}}"><img class="partner_cover" src="{{partner.cover.thumb(116, auto, {'mode':'crop'})}}"></a>
+                    {% endfor %}
+
+
+            <div class="row container partners-map-container">
+                <div id="mycomponentpartners"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

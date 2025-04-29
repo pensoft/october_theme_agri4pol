@@ -1,0 +1,95 @@
+[menu]
+start = "id-1"
+activeNode = 0
+listItemClasses = "nav-item"
+primaryClasses = "navbar-nav"
+secondaryClasses = "dropdown-menu"
+numberOfLevels = 2
+==
+<nav class="pr-1 pl-1 navbar fixed" id="headernavbar">
+    <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        {% component 'menu' %}
+    </div>
+    <a href="{{'home'|page}}" class="navbar-brand" style="background: url('{{ this.theme.site_logo.getPath() }}') center no-repeat; background-size: contain;">
+
+    </a>
+
+    <div class="navbar-collapse collapse end-xs" id="headerNavbarNav" style="display: none;">
+        {% component 'menu' %}
+    </div>
+
+    <div class="search-and-social-media hidden-xs">
+        <ul class="navbar-nav">
+            <li class="nav-item social">
+                <a class="pr middle search-btn" onclick="showSearchForm();"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="search-modal-overlay" id="searchModalOverlay">
+        <div class="search-modal">
+            <div class="search-modal-header">
+                <button type="button" class="close-search" onclick="hideSearchForm();">
+                    <span class="close-icon">×</span>
+                </button>
+            </div>
+            <div class="search-modal-content">
+                <h3 class="search-title">Search Agri4pol</h3>
+                <form class="search-form" action="{{ url('search')}}" method="get">
+                    <div class="search-input-wrapper">
+                        <input class="form-control search_input" name="q" type="text" autocomplete="on" placeholder="Search for pollinators, agriculture, biodiversity...">
+                        <button type="submit" class="search-submit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M19 19L14.65 14.65M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="search-hints">
+                        Press <kbd>Enter</kbd> to search or <kbd>ESC</kbd> to close
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="header-image {{page_id}}">
+    <div class="header_image_overlay"></div>
+    {% if page_id == 'home' %}
+    <div class="hero">
+        <div class="intro-container">
+            <div class="intro-row row">
+                <div class="col-xs-12">
+                    <h1>WELCOME TO AGRI4POL</h1>
+                </div>
+                <div class="col-xs-12 sub-title">
+                    <p>Promoting sustainable agriculture</p>
+                    <p>for pollinators</p>
+                </div>
+                <div class="col-xs-12">
+                    <div class="button-row row">
+                        <a href="{{'about'|page}}" class="btn btn-primary home-btn">Learn More</a>
+                        {% if enable_linkedin and linkedin_url %}
+                        <a href="{{ linkedin_url }}" class="btn btn-social btn-linkedin" aria-label="LinkedIn" target="_blank"></a>
+                        {% endif %}
+                        {% if enable_bluesky and bluesky_url %}
+                        <a href="{{ bluesky_url }}" class="btn btn-social btn-bluesky" aria-label="BlueSky" target="_blank"></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="header-image-bar" {% if user and this.page.id != 'home' %} style="margin-top: 154px!important;" {% endif %}>
+        <h1 class="underline white">{% if page_title %} {{page_title}} {% else %} {{site_name}} {% endif %}</h1>
+        <!-- <video autoplay loop muted playsinline class="header-video">
+            <source src="{{ 'home_intro.mp4'|media }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video> -->
+    </div>
+    {% endif %}
+</div>

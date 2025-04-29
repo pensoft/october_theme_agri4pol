@@ -1,0 +1,99 @@
+url = "/newsletters"
+layout = "default"
+title = "Newsletters"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+header_image = "media.jpg"
+
+[builderList mediaNewsletterList]
+modelClass = "pensoft\Media\Models\Newsletters"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "name"
+noRecordsMessage = "No records found"
+detailsPage = "-"
+detailsUrlParameter = "id"
+pageNumber = "{{ :page }}"
+
+[jumbotron]
+jumbotron = "newsletter-coming-soon"
+title = 0
+background = "transperant"
+templates = "template1"
+description_limit = 0
+==
+<?php
+use Pensoft\Media\Models\Newsletters;
+use System\Models\File;
+
+function onStart(){
+	$this['mediaNewslettersList'] =  Newsletters::orderBy('date', 'desc')->get();
+if(get('download')){
+$file = File::find((int)get('download'));
+$file_name = $file->getLocalPath();
+$recordName = get('file_name') ? get('file_name') : 'ForestPaths_newsletter';
+$ext= $file->getExtension();
+
+if (file_exists($file_name)) {
+header('Content-Description: File Transfer');
+header('Content-Type: application/octet-stream');
+header("Content-Type: application/force-download");
+header('Content-Disposition: attachment; filename='.$recordName .'.'. $ext);
+header('Content-Transfer-Encoding: binary');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
+header('Content-Length: ' . filesize($file_name));
+ob_clean();
+flush();
+readfile($file_name);
+exit();
+}
+return Redirect::to('/media-center/newsletters');
+}
+}
+?>
+==
+{% set records = mediaNewslettersList %}
+
+<div class="container-fluid menu-container">
+    <div class="header-bg">
+        <h1>Newsletters</h1>
+    </div>
+</div>
+
+{% if records.count %}
+<div class="container">
+    <div class="row newsletter_container start-md around-xs">
+
+        {% for record in records %}
+        {# Use spaceless tag to remove spaces inside the A tag. #}
+        {% spaceless %}
+        {% if record.newsletter_image %}
+        <div class="col-md-4 col-xs-12 mb-4">
+            <div class="newsletter_item">
+                <div class="text-center">
+                    <span class="card_image_container" style="background: url({{record.newsletter_image.thumb(321,217,{'mode':'crop'})}}) center center no-repeat;" title="{{record.name}}"></span>
+                    <span class="card_title" style="min-height: 100px;">{{record.name}}</span>
+                    <div class="date">{{record.date |date('F Y')}}</div>
+                </div>
+                <a href="{{ record.url}}" target="_blank" title="{{record.name}}" class="btn btn-primary">Read the newsletter</a>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% endspaceless %}
+        {% else %}
+        {{ noRecordsMessage }}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% else %}
+<div class="container-fluid bg-secondary coming_soon">
+    {% component 'jumbotron' %}
+</div>
+{% endif %}

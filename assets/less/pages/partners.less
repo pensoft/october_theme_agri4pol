@@ -1,0 +1,176 @@
+ul.partners_logos_list{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0;
+    display: block;
+}
+ul.partners_logos_list li{
+    display: inline-flex;
+    text-align: center;
+    vertical-align: middle;
+    margin: 17px 17px 0 0;
+    background: @secondary-color;
+    border-radius: 50%;
+    padding: 20px;
+    .breakpoint-large-down({
+        margin: 17px 4px 0 4px;
+    });
+
+}
+
+
+
+
+.parener_logo{
+    width: 169px;
+    height: 98px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 11px #00000017;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 25px 25px 0px;
+    cursor: pointer;
+
+    &:hover{
+        box-shadow: none;
+    }
+
+    .breakpoint-large-down({
+        //margin: 15px 2px 15px 3px;
+        width: 143px;
+        margin: 10px auto ;
+    });
+
+
+    .partner_cover{
+        width: 125px;
+        height: 55px;
+        object-fit: contain;
+    }
+
+}
+
+
+.fill_default:hover,
+.fill_default.fill_ES:hover,
+.fill_default.fill_AU:hover,
+.fill_default.fill_FR:hover,
+.fill_default.fill_DE:hover,
+.fill_default.fill_BG:hover,
+.fill_default.fill_HU:hover,
+.fill_default.fill_PT:hover,
+.fill_default.fill_GB:hover,
+.fill_default.fill_RO:hover,
+.fill_default.fill_SE:hover,
+.fill_default.fill_BE:hover,
+.fill_default.fill_NL:hover,
+.fill_default.fill_IT:hover,
+.fill_default.fill_EE:hover,
+.fill_default.fill_CH:hover
+{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.partners_list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 100px;
+    .breakpoint-large-down({
+        margin-top: 0;
+        justify-content: space-between;
+    });
+}
+
+.partners-map-container{
+    margin-top: 0px;
+    padding: 0;
+}
+
+.partner-item{
+    padding: 50px 0!important;
+    .col-xs-12{
+        padding: 0!important;
+    }
+    .partner_title{
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 900;
+        a{
+            color: @text-color-default;
+        }
+
+    }
+    .partner_link{
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+
+    .partner_country {
+        justify-content: end;
+        display: flex;
+        .breakpoint-large-down({
+            display: flex;
+            justify-content: start;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        });
+
+        span{
+            width: 38px;
+            height: 27px;
+            border-radius: 5px;
+            display: block;
+
+            &.country_DE {
+                background: url("../../assets/images/flag_de.png") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_BG {
+                background: url("../../assets/images/flag_bg.png") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_IE {
+                background: url("../../assets/images/flag_ir.png") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_ES {
+                background: url("../../assets/images/flag_es.png") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_GR {
+                background: url("../../assets/images/flag_gr.png") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_NL {
+                background: url("../../assets/images/flag_nl.png") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_DK {
+                background: url("../../assets/images/flag_dk.png") top left no-repeat;
+                background-size: cover;
+            }
+        }
+
+
+
+    }
+
+
+
+
+}
+
+.see_all_partners_link{
+    width: 100%;
+}

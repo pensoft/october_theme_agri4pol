@@ -1,0 +1,647 @@
+.menu-container{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    position: relative;
+    padding: 0;
+
+    .breakpoint-large-down({
+        margin-top: 0;
+        margin-bottom: 0;
+    });
+    .container{
+        padding: 0;
+    }
+}
+
+.header-container{
+    margin: 0!important;
+    padding: 0!important;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.header-bg {
+    background: url('../../assets/images/banner-cover.png') left center no-repeat;
+    background-size: cover;
+    border-radius: 0 55px 55px 0;
+    width: 41vw;
+    height: 81px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    h1 {
+        font-size: 34px;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin: 0;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+}
+
+.about-menu {
+    height: 81px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-family: 'Montserrat'!important;
+    width: 100%;
+    flex-direction: row;
+
+    &-item {
+        color: @light-color;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 0 5px;
+        position: relative;
+        transition: color 0.3s ease;
+        font-weight: 600;
+
+        &:hover {
+            opacity: 0.6;
+        }
+
+        &.active {
+            //color: @primary-color;
+            font-weight: 600;
+            opacity: 0.6;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header-bg {
+        height: auto;
+        border-radius: 0;
+        position: relative;
+        width: 100%;
+        padding: 10px 0;
+        top: -10px;
+
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .about-menu {
+        padding: 15px 0;
+        flex-direction: column;
+        height: auto;
+
+        .row {
+            justify-content: flex-start;
+            margin-left: 0;
+        }
+
+        &-item {
+            font-size: 14px;
+            padding: 8px 12px;
+            margin: 5px;
+        }
+    }
+}
+
+.about-section {
+    // padding: 60px 0;
+    min-height: 400px;
+
+    .section-label {
+        height: 100%;
+        position: relative;
+        padding-right: 0;
+
+        h2 {
+            position: absolute;
+            transform: rotate(-90deg);
+            transform-origin: left top;
+            font-size: 53px;
+            font-weight: 300;
+            color: @light-color;
+            text-transform: uppercase;
+            white-space: nowrap;
+            top: 90%;
+            left: 0;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+    }
+}
+
+// Background section specific styles
+#background {
+    position: relative;
+    overflow: hidden;
+
+    .background-row {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .background-content {
+        padding-left: 0;
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .background-image {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .image-placeholder {
+            display: none;
+        }
+    }
+}
+
+ //Responsive adjustments
+@media (max-width: 1024px) {
+    .about-section {
+        .section-label {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+
+            h2 {
+                position: static;
+                transform: none;
+                font-size: 36px;
+                text-align: left;
+                margin-bottom: 15px;
+                white-space: pre-wrap;
+            }
+        }
+    }
+
+    #background {
+        .background-image {
+            margin-top: 30px;
+
+            .image-placeholder {
+                height: 200px;
+            }
+        }
+    }
+}
+
+// Mission section specific styles
+#mission {
+    padding: 0;
+
+    .mission-bg {
+        background-image: url('../images/mission-background.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 60px 0;
+        position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    .mission-container{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .mission-label {
+        position: absolute;
+        left: 70px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        height: auto;
+
+        h2 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 53px;
+            font-weight: 300;
+            text-transform: uppercase;
+            transform: rotate(-90deg) translateX(-50%);
+            transform-origin: left center;
+            white-space: nowrap;
+            position: relative;
+            margin: 0;
+        }
+    }
+
+
+    .mission-row {
+        width: 80%;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 20px 30px;
+        margin-left: 60px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .mission-content-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mission-content {
+        p {
+            margin-bottom: 0;
+            line-height: 1.6;
+            color: #555;
+        }
+    }
+
+    .mission-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+// Responsive styles for mission section
+@media (max-width: 1024px) {
+    #mission {
+        .mission-label {
+            position: static;
+            transform: none;
+            margin-bottom: 20px;
+            left: 0;
+            text-align: center;
+
+            h2 {
+                position: static;
+                transform: none;
+                font-size: 36px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+        }
+
+        .mission-row {
+            margin-left: 0;
+        }
+    }
+}
+
+// Objectives section styles
+#objectives {
+    padding: 80px 0;
+
+    .objectives-label{
+        h2{
+            transform-origin: left center!important;
+            left: 65px;
+            transform: rotate(-90deg) translateX(-50%);
+            top: 140px;
+        }
+    }
+
+    .objectives-container {
+        width: 100%;
+    }
+
+    .objective-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 50px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .objective-number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .number-circle {
+            font-size: 32px;
+            font-weight: 600;
+            color: #4b7f37;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+            &:before {
+                content: '';
+                position: absolute;
+                width: 120px;
+                height: 120px;
+                background: #B3BFA9 0% 0% no-repeat padding-box;
+                opacity: 0.34;
+                filter: blur(21px);
+                border-radius: 50%;
+                z-index: -1;
+            }
+        }
+    }
+
+    .objective-text {
+        display: flex;
+        align-items: center;
+
+        p {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.5;
+            color: @primary-color;
+        }
+    }
+
+    .objective-image {
+        display: flex;
+        justify-content: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    #objectives {
+        .objectives-label {
+            h2 {
+                position: static;
+                transform: none !important;
+                font-size: 40px;
+                text-align: left;
+                margin-bottom: 20px;
+                left: 0;
+                top: 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #objectives {
+        padding: 40px 0;
+
+        .objectives-label {
+            h2 {
+                position: static;
+                transform: none !important;
+                font-size: 36px;
+                text-align: left;
+                margin-bottom: 15px;
+                left: 0;
+                top: 0;
+            }
+        }
+
+        .objective-item {
+            flex-direction: column;
+            margin-bottom: 40px;
+
+            .objective-number {
+                order: 1;
+                margin: 15px 0;
+
+                .number-circle {
+                    font-size: 28px;
+                }
+            }
+
+            .objective-image {
+                order: 2;
+                margin-bottom: 15px;
+            }
+
+            .objective-text {
+                order: 3;
+                text-align: center;
+
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+// Work Packages section styles
+#work-packages {
+    padding: 80px 0;
+    background: url("../../assets/images/WP-background.jpg") bottom no-repeat;
+    background-size: cover;
+    position: relative;
+    margin-bottom: -8px; // not realy necessary
+
+    .work-packages-row {
+        display: flex;
+        position: relative;
+    }
+
+    .work-packages-sidebar {
+        width: 100px;
+        position: relative;
+
+        .vertical-text {
+            position: absolute;
+            color: #fff;
+            font-size: 53px;
+            font-weight: 300;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transform: rotate(-90deg) translateX(-50%);
+            transform-origin: left top;
+            top: 300px;
+            left: 40px;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+    }
+
+    .work-packages-label {
+        display: none;
+    }
+
+    .work-packages-container {
+        flex: 1;
+    }
+
+    .work-package-box {
+        background-color: #fff;
+        border-radius: 15px;
+        margin-bottom: 50px;
+        padding: 25px 30px;
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        transition: all 0.4s ease-out;
+        max-width: 400px;
+        min-height: 160px;
+
+        &.expanded {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-5px);
+        }
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .wp-header {
+            font-size: 28px;
+            font-weight: 700;
+            color: #4b7f37;
+            margin-bottom: 15px;
+        }
+
+        .wp-title {
+            h3 {
+                font-size: 20px;
+                font-weight: 300;
+                color: @primary-color;
+                margin: 0 0 15px 0;
+                line-height: 1.5;
+            }
+        }
+
+        .wp-content {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 5px 0;
+            max-height: 500px;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+
+            &.slideDown, &:not([style*="display: none"]) {
+                opacity: 1;
+            }
+        }
+
+        .wp-arrow {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            z-index: 2;
+
+            .arrow-toggle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                width: 60px;
+                height: 60px;
+                background: #fff;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 38px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+
+                &:hover {
+                    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+                }
+
+                .arrow-down {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        background: url("../../assets/images/arrow-wp.svg") no-repeat center center;
+                        background-size: contain;
+                        width: 21px;
+                        height: 21px;
+                    }
+                }
+
+                &.active {
+                    transform: translateY(3px);
+
+                    .arrow-down {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    #work-packages {
+        padding: 60px 0;
+
+        .work-packages-sidebar {
+            display: none;
+        }
+
+        .work-packages-label {
+            display: block;
+
+            h2 {
+                position: static;
+                transform: none !important;
+                font-size: 40px;
+                text-align: center;
+                margin-bottom: 30px;
+                color: #fff;
+                font-weight: 300;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #work-packages {
+        padding: 40px 0;
+
+        .work-package-box {
+            margin-bottom: 40px;
+        }
+    }
+}

@@ -1,0 +1,66 @@
+url = "/contact"
+layout = "default"
+title = "Contact"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+[jumbotron]
+jumbotron = "contact"
+background = "#ffffff"
+templates = "template2"
+description_limit = 0
+==
+<?php
+use Pensoft\Cardprofiles\Models\Profiles;
+
+function onStart(){
+	$this['profiles'] =  Profiles::where('category_id', 1)->get();
+}
+?>
+==
+{% component 'siteSearchInclude' %}
+<div class="container-fluid menu-container">
+    <div class="header-bg">
+        <h1>Contact</h1>
+    </div>
+</div>
+
+<section class="container-fluid contact-section">
+    <div class="container">
+        <div class="row contacts_container">
+            {% for profile in profiles %}
+                <div class="col-md-6 col-xs-12 profile-item mb-4">
+                    <div class="row contact_info">
+                        <div class="col-xs-12 coordinator_info">
+                            <h3>{{profile.names}}</h3>
+                            <img src="{{profile.avatar.thumb(412, 362, {'mode' : 'crop' })}}" class="fr-fic fr-dii">
+                            <div class="contact_description_container">
+                                {% if profile.position %}<div class="content">{{profile.position}}</div>{% endif %}
+                                {% if profile.content %}<div class="content">{{profile.content|raw}}</div>{% endif %}
+                                {% if profile.email %}
+                                <div class="row email_logo_container">
+                                    <div class="col-md-8 col-xs-12">
+                                        <a href="mailto:{{profile.email}}" class="btn btn-primary btn-contact-email">
+                                            {{profile.email}}
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 end-md center-xs">
+                                        {% if profile.partner.cover %}
+                                        <a href="{{profile.partner.instituion_url}}" target="_blank">
+                                            <img src="{{profile.partner.cover.thumb(100, 40, {'mode' : 'fit'})}}" alt="Partner Logo" class="partner-logo">
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

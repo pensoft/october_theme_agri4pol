@@ -1,0 +1,147 @@
+.newsletter_container{
+    margin-top: 100px;
+    .breakpoint-large-down({
+        margin-top: 0;
+    });
+    .newsletter_item{
+        text-align: center;
+        background: @secondary-color;
+        padding: 15px;
+        max-width: min-content;
+        height: 100%;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+    }
+}
+
+.videos_container,
+.flyer_container,
+.logo_container{
+    text-align: center;
+    background: @secondary-color;
+    padding: 15px;
+    max-width: min-content;
+    height: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+
+    .btn.btn-primary{
+        display: inline-flex;
+        min-height: 47px;
+        height: 47px;
+        margin-top: 20px;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    form{
+        display: inline-flex;
+    }
+}
+
+.videos_container{
+    min-width: 93%;
+}
+
+.media-center,
+.newsletters{
+    .card_image_container{
+        display: flex;
+        background-size: unset!important;
+        width: 321px;
+        height: 217px;
+        margin-bottom: 25px;
+    }
+    .date{
+        color: @green-color;
+        font-weight: bold;
+        margin: 25px auto 0 auto;
+    }
+
+    .btn-primary{
+        margin:  0 auto;
+    }
+
+    .card-container-row{
+        margin-top: 100px!important;
+        margin-bottom: 100px!important;
+    }
+}
+
+.press-releases .link a{
+    margin-right: 20px;
+    .breakpoint-small-down({
+        margin-right: 0;
+        margin-bottom: 20px;
+    });
+}
+
+.press-relieses-container{
+    margin-top: 100px;
+    .breakpoint-large-down({
+        margin-top: 0;
+    });
+    .date{
+        color: @yellow-color;
+        font-weight: bold;
+    }
+    .press-relies-item{
+        background: @secondary-color;
+        padding: 30px!important;
+        margin: 30px 0!important;
+        color: @default-color!important;
+        font-size: 16px;
+        .rounded(5px);
+        position: relative;
+    }
+}
+
+.media_tabs{
+    height: 81px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-family: 'Montserrat'!important;
+    width: 100%;
+    flex-direction: row;
+
+    .breakpoint-large-down({
+        flex-direction: column !important;
+        height: auto;
+        margin-top: 10px;
+    });
+
+    a {
+        color: @light-color;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 0 5px;
+        position: relative;
+        transition: color 0.3s ease;
+        font-weight: 600;
+
+        &:hover {
+            opacity: 0.6;
+        }
+
+        &.active {
+            //color: @primary-color;
+            font-weight: 600;
+            opacity: 0.6;
+        }
+    }
+}
+
+.media-center{
+    .card-container-row{
+        margin-top: 100px;
+        .breakpoint-large-down({
+            margin-top: 0;
+        });
+    }
+}

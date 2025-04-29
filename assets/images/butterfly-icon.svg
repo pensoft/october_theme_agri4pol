@@ -1,0 +1,43 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(10,10) scale(0.8)">
+    <!-- Left Wing - Top -->
+    <path d="M60 45 C20 10, 10 40, 30 60" fill="#C2E0A3" stroke="#3D7F18" stroke-width="1.5" opacity="0.9" />
+    
+    <!-- Left Wing - Bottom -->
+    <path d="M60 45 C20 80, 10 60, 30 60" fill="#A0D0A0" stroke="#3D7F18" stroke-width="1.5" opacity="0.9" />
+    
+    <!-- Right Wing - Top -->
+    <path d="M60 45 C100 10, 110 40, 90 60" fill="#C2E0A3" stroke="#3D7F18" stroke-width="1.5" opacity="0.9" />
+    
+    <!-- Right Wing - Bottom -->
+    <path d="M60 45 C100 80, 110 60, 90 60" fill="#A0D0A0" stroke="#3D7F18" stroke-width="1.5" opacity="0.9" />
+    
+    <!-- Wing Patterns - Left top -->
+    <path d="M30 30 C40 35, 50 32, 55 40" fill="none" stroke="#3D7F18" stroke-width="1" opacity="0.7" />
+    <circle cx="35" cy="28" r="3" fill="#FFC632" stroke="#3D7F18" stroke-width="0.5" />
+    <circle cx="48" cy="38" r="2" fill="#FFC632" stroke="#3D7F18" stroke-width="0.5" />
+    
+    <!-- Wing Patterns - Right top -->
+    <path d="M90 30 C80 35, 70 32, 65 40" fill="none" stroke="#3D7F18" stroke-width="1" opacity="0.7" />
+    <circle cx="85" cy="28" r="3" fill="#FFC632" stroke="#3D7F18" stroke-width="0.5" />
+    <circle cx="72" cy="38" r="2" fill="#FFC632" stroke="#3D7F18" stroke-width="0.5" />
+    
+    <!-- Wing Patterns - Left bottom -->
+    <path d="M30 70 C40 65, 50 68, 55 60" fill="none" stroke="#3D7F18" stroke-width="1" opacity="0.7" />
+    <circle cx="35" cy="72" r="3" fill="#FFC632" stroke="#3D7F18" stroke-width="0.5" />
+    
+    <!-- Wing Patterns - Right bottom -->
+    <path d="M90 70 C80 65, 70 68, 65 60" fill="none" stroke="#3D7F18" stroke-width="1" opacity="0.7" />
+    <circle cx="85" cy="72" r="3" fill="#FFC632" stroke="#3D7F18" stroke-width="0.5" />
+    
+    <!-- Body -->
+    <path d="M60 30 C62 38, 64 46, 60 55 C56 46, 58 38, 60 30 Z" fill="#3D7F18" stroke="#3D7F18" stroke-width="1" />
+    <path d="M60 55 C62 63, 64 71, 60 80 C56 71, 58 63, 60 55 Z" fill="#3D7F18" stroke="#3D7F18" stroke-width="1" />
+    
+    <!-- Antenna -->
+    <path d="M58 30 Q53 20, 48 15" fill="none" stroke="#3D7F18" stroke-width="1.5" />
+    <path d="M62 30 Q67 20, 72 15" fill="none" stroke="#3D7F18" stroke-width="1.5" />
+    <circle cx="48" cy="15" r="1.5" fill="#3D7F18" />
+    <circle cx="72" cy="15" r="1.5" fill="#3D7F18" />
+  </g>
+</svg> 
