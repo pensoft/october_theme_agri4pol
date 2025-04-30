@@ -12,6 +12,14 @@ title = 0
 background = "transperant"
 templates = "template3"
 description_limit = 0
+
+[jumbotron numbers]
+jumbotron = "numbers"
+title = 0
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
 ==
 <?php
 use Pensoft\Articles\Models\Article;
@@ -32,109 +40,70 @@ function onStart(){
 ==
 {% component 'siteSearchInclude' %}
 
-    <section class="container-fluid vision-section">
-        <div class="video-background">
-            <video autoplay muted loop playsinline>
-                <source src="{{ 'bg-video-vision.mp4'|media }}" type="video/mp4">
-            </video>
-        </div>
-        {% component 'vision' %}
-        <div class="scroll-indicator" aria-hidden="true"></div>
-    </section>
+<section class="container-fluid vision-section">
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="{{ 'bg-video-vision.mp4'|media }}" type="video/mp4">
+        </video>
+    </div>
+    {% component 'vision' %}
+    <div class="scroll-indicator" aria-hidden="true"></div>
+</section>
 
-    <section class="container-fluid numbers" data-aos="fade-up" data-aos-duration="800">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-3 col-sm-6 col-xs-12" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="number-wrapper">
-                        <div class="number-circle"></div>
-                        <span class="number">23</span>
-                    </div>
-                    <div class="number-description">
-                        <p class="title">Partners<br>(including associated)</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="number-wrapper">
-                        <div class="number-circle"></div>
-                        <span class="number">4</span>
-                    </div>
-                    <div class="number-description">
-                        <p class="title">Years<br>Duration</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="number-wrapper">
-                        <div class="number-circle"></div>
-                        <span class="number">14</span>
-                    </div>
-                    <div class="number-description">
-                        <p class="title">Countries</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="number-wrapper">
-                        <div class="number-circle"></div>
-                        <span class="number">8</span>
-                    </div>
-                    <div class="number-description">
-                        <p class="title">Work<br>Packages</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="container-fluid numbers" data-aos="fade-up" data-aos-duration="800">
+    {% component 'numbers' %}
+</section>
 
-    {% if highlights|length > 0 %}
-    <section class="container-fluid news-section" data-aos="fade-up" data-aos-duration="800">
-        <div class="container news-head-section">
-            <div class="row">
-                <div class="col-md-8 col-xs-12 header-section">
-                    <div class="col-xs-12 whats-new">What's new?</div>
-                    <h2>LATEST FROM THE PROJECT</h2>
+{% if highlights|length > 0 %}
+<section class="container-fluid news-section" data-aos="fade-up" data-aos-duration="800">
+    <div class="container news-head-section">
+        <div class="row">
+            <div class="col-md-8 col-xs-12 header-section">
+                <div class="col-xs-12 whats-new">What's new?</div>
+                <h2>LATEST FROM THE PROJECT</h2>
+            </div>
+            <div class="col-md-4 col-xs-12 carousel-control">
+                <div class="button-row row">
+                    <a class="btn btn-social prev-arrow" aria-label="Previous slide"></a>
+                    <a class="btn btn-social next-arrow" aria-label="Next slide"></a>
+                    <a href="/news" class="btn btn-all-news desktop-all-news">All news</a>
                 </div>
-                <div class="col-md-4 col-xs-12 carousel-control">
-                    <div class="button-row row">
-                        <a class="btn btn-social prev-arrow" aria-label="Previous slide"></a>
-                        <a class="btn btn-social next-arrow" aria-label="Next slide"></a>
-                        <a href="/news" class="btn btn-all-news desktop-all-news">All news</a>
+            </div>
+        </div>
+    </div>
+    <div class="news-carousel">
+        {% for highlight in highlights %}
+        <div class="home-news-highlights">
+            <div class="news-item">
+                <div class="news-image">
+                    <a href="/news/{{highlight.slug}}">
+                        <img src="{{ highlight.cover.path}}" alt="{{ highlight.title }}">
+                    </a>
+                </div>
+                <div class="news-content">
+                    <a href="/news/{{highlight.slug}}">
+                        <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
+                    </a>
+                    <div class="news-date">{{ highlight.published_at|date('d.m.Y') }}</div>
+                </div>
+                <div class="news-back">
+                    <div class="back-content">
+                        <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
+                        <a href="/news/{{highlight.slug}}" class="read-more btn-primary home-btn">Read more <span></span></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="news-carousel">
-            {% for highlight in highlights %}
-            <div class="home-news-highlights">
-                <div class="news-item">
-                    <div class="news-image">
-                        <a href="/news/{{highlight.slug}}">
-                            <img src="{{ highlight.cover.path}}" alt="{{ highlight.title }}">
-                        </a>
-                    </div>
-                    <div class="news-content">
-                        <a href="/news/{{highlight.slug}}">
-                            <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                        </a>
-                        <div class="news-date">{{ highlight.published_at|date('d.m.Y') }}</div>
-                    </div>
-                    <div class="news-back">
-                        <div class="back-content">
-                            <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                            <a href="/news/{{highlight.slug}}" class="read-more btn-primary home-btn">Read more <span></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="container mobile-all-news-container">
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <a href="/news" class="btn btn-all-news mobile-all-news">All news</a>
-                </div>
+        {% endfor %}
+    </div>
+    <div class="container mobile-all-news-container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <a href="/news" class="btn btn-all-news mobile-all-news">All news</a>
             </div>
         </div>
-    </section>
-    {% endif %}
+    </div>
+</section>
+{% endif %}
 
-    {% partial 'subscribe-section' %}
+{% partial 'subscribe-section' %}
