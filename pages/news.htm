@@ -229,6 +229,12 @@ $this['related'] = $related;
                             </div>
 
                         </div>
+                        <div class="news-back">
+                            <div class="back-content">
+                                <h3 class="news-title">{{ record.title|length > 100 ? record.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
+                                <a href="/news/{{record.slug}}" class="read-more btn-primary" style="display: inline-flex; background-color: white; color: #333; padding: 10px 25px;">Read more <span style="display: inline-block; width: 10px; height: 10px; margin-left: 6px;"></span></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endspaceless %}

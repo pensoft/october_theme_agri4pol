@@ -25,6 +25,9 @@ $(document).ready(function() {
 		divs.slice(i, i+2).wrapAll( '<div class="col-xs" />');
 	}
 
+    // Add search button to mobile menu after CONTACT
+    $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"><a href="#" class="mobile-search-btn" aria-label="Search"></a></div></li>');
+
 	var headerNavbar = $('#headerNavbar');
 	var width100 = $('.width100');
 	var innerWidth = $('body').innerWidth();
@@ -87,6 +90,11 @@ $(document).ready(function() {
                 $('body', 'html').css({
                     'overflow': 'hidden'
                 });
+                
+                // Make sure search button is the last item - reappend it
+                if ($('#menuToggle #menu .search_field').length === 0) {
+                    $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"><a href="#" class="mobile-search-btn" aria-label="Search"></a></div></li>');
+                }
             }else{
                 $('#menu').hide("slide", { direction: "right" }, 400);
                 $('#search').hide();
@@ -94,6 +102,24 @@ $(document).ready(function() {
                     'overflow': 'auto'
                 });
             }
+        });
+        
+        // Handle mobile search button click
+        $(document).on('click', '.mobile-search-btn', function(e) {
+            e.preventDefault();
+            // Close mobile menu
+            $('#menuToggle input[type="checkbox"]').prop('checked', false);
+            $('#menu').hide("slide", { direction: "right" }, 400);
+            $('body', 'html').css({
+                'overflow': 'auto'
+            });
+            
+            // Show search modal after menu closes
+            setTimeout(function() {
+                showSearchForm();
+            }, 400);
+            
+            return false;
         });
     }
 
@@ -400,3 +426,27 @@ function initWorkPackagesToggle() {
 }
 
 init()
+
+// Add mobile search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Make sure mobile search button works
+    const mobileSearchBtn = document.querySelector('.mobile-search-btn');
+    if (mobileSearchBtn) {
+        mobileSearchBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Close mobile menu if open
+            if (document.querySelector('#menuToggle input[type="checkbox"]').checked) {
+                document.querySelector('#menuToggle input[type="checkbox"]').checked = false;
+                $('#menu').hide("slide", { direction: "right" }, 400);
+                $('body', 'html').css({
+                    'overflow': 'auto'
+                });
+            }
+            
+            // Show search form
+            setTimeout(function() {
+                showSearchForm();
+            }, 100);
+        });
+    }
+});
