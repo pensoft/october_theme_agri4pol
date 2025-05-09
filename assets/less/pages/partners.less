@@ -20,7 +20,9 @@ ul.partners_logos_list li{
 
 
 
-
+#mycomponentpartners{
+    width: 100%;
+}
 .parener_logo{
     width: 169px;
     height: 98px;
@@ -121,10 +123,15 @@ ul.partners_logos_list li{
         });
 
         span{
-            width: 38px;
+            width: 40px;
             height: 27px;
             border-radius: 5px;
             display: block;
+
+            &.country_GB {
+                background: url("../../assets/images/flag_gb.svg") top left no-repeat;
+                background-size: cover;
+            }
 
             &.country_DE {
                 background: url("../../assets/images/flag_de.png") top left no-repeat;
@@ -160,9 +167,32 @@ ul.partners_logos_list li{
                 background: url("../../assets/images/flag_dk.png") top left no-repeat;
                 background-size: cover;
             }
+            
+            &.country_BE {
+                background: url("../../assets/images/flag_be.svg") top left no-repeat;
+                background-size: cover;
+            }
+            
+            &.country_IT {
+                background: url("../../assets/images/flag_it.svg") top left no-repeat;
+                background-size: cover;
+            }
+            
+            &.country_SI {
+                background: url("../../assets/images/flag_si.svg") top left no-repeat;
+                background-size: cover;
+            }
+            
+            &.country_CH {
+                background: url("../../assets/images/flag_ch.svg") top left no-repeat;
+                background-size: cover;
+            }
+
+            &.country_FR {
+                background: url("../../assets/images/flag_fr.svg") top left no-repeat;
+                background-size: cover;
+            }
         }
-
-
 
     }
 

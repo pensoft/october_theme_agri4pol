@@ -53,12 +53,13 @@ function onStart(){
         {% spaceless %}
         <div class="col-xs-12">
             <div class="press-relies-item">
+                <div class="card_date">{{record.date|date('d M Y')}}</div>
                 <span class="card_title">{{record.name}}</span><br><br>
 
                 <div class="body">{{record.description | raw}}</div>
                 <div class="row link">
                     {% for link in record.link %}
-                    <a href="{{link.url}}" target="_blank" class="btn btn-primary">{{link.text}}</a>
+                    <a href="{{link.url}}" target="_blank" class="btn btn-primary link-btn">{{link.text}}</a>
                     {% endfor %}
                 </div>
             </div>

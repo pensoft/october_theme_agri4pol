@@ -64,13 +64,45 @@ function onStart(){
             </div>
             <div class="col-md-4 col-xs-12 carousel-control">
                 <div class="button-row row">
+                    {% if highlights|length > 3 %}
                     <a class="btn btn-social prev-arrow" aria-label="Previous slide"></a>
                     <a class="btn btn-social next-arrow" aria-label="Next slide"></a>
+                    {% endif %}
                     <a href="/news" class="btn btn-all-news desktop-all-news">All news</a>
                 </div>
             </div>
         </div>
     </div>
+    
+    {% if highlights|length < 4 %}
+    <div class="container less-than-4-news">
+        <div class="shared-news-grid">
+            {% for highlight in highlights %}
+            <div class="news-item-wrapper col-md-4 col-xs-12">
+                <div class="news-item">
+                    <div class="news-image">
+                        <a href="/news/{{highlight.slug}}">
+                            <img src="{{ highlight.cover.path}}" alt="{{ highlight.title }}">
+                        </a>
+                    </div>
+                    <div class="news-content">
+                        <a href="/news/{{highlight.slug}}">
+                            <div class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</div>
+                        </a>
+                        <div class="news-date">{{ highlight.published_at|date('d.m.Y') }}</div>
+                    </div>
+                    <div class="news-back">
+                        <div class="back-content">
+                            <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
+                            <a href="/news/{{highlight.slug}}" class="read-more btn-primary home-btn small-read-more">Read more <span></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
     <div class="news-carousel">
         {% for highlight in highlights %}
         <div class="home-news-highlights">
@@ -89,13 +121,15 @@ function onStart(){
                 <div class="news-back">
                     <div class="back-content">
                         <h3 class="news-title">{{ highlight.title|length > 100 ? highlight.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlight.title|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                        <a href="/news/{{highlight.slug}}" class="read-more btn-primary home-btn">Read more <span></span></a>
+                        <a href="/news/{{highlight.slug}}" class="read-more btn-primary home-btn small-read-more">Read more <span></span></a>
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
+    {% endif %}
+    
     <div class="container mobile-all-news-container">
         <div class="row">
             <div class="col-xs-12 text-center">

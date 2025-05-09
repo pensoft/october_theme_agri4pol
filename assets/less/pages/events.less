@@ -329,11 +329,15 @@
         }
 
         .date_week{
-            font-size: 18px;
+            font-size: 19px;
+            font-weight: 800;
             line-height: 26px;
             color: #1B1B2D;
-            font-weight: 300;
             padding-left: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
             .breakpoint-large-down({
                 padding-left: 0px;
                 padding-top: 10px;
@@ -343,10 +347,10 @@
 
         img{
             float: left;
-            width: 174px;
-            height: auto;
+            width: 186px;
+            height: 116px;
             object-fit: cover;
-            object-position: top;
+            object-position: center;
             .breakpoint-large-down({
                 float: none;
                 margin-right: 0;
@@ -362,15 +366,107 @@
             color: @link-color;
             font-weight: bold;
             font-size: 16px;
-            background: url("../../assets/images/arrow-right.svg") right center no-repeat;
-            background-size: contain;
-            padding-right: 15px;
-            height: 0.8em;
-            line-height: 0.8em;
-            &:hover{
-                opacity: 0.7;
+            padding-right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 5px;
+            background: @yellow-color;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            
+            /* Create a larger invisible hit area to prevent edge hover issues */
+            &:before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: -10px;
+                right: -10px;
+                bottom: -10px;
+                background: transparent;
+                z-index: -1;
             }
-
+            
+            /* Gradient shine effect element */
+            &:after {
+                content: "";
+                display: block;
+                width: 18px;
+                height: 18px;
+                background: url("../../assets/images/event-arrow.svg") center center no-repeat;
+                background-size: contain;
+                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+                transform: translateZ(10px);
+            }
+            
+            /* Use a pseudo-element for shine effect since we repurposed :before */
+            &::after {
+                z-index: 1;
+            }
+            
+            /* Add extra element for shine effect */
+            .shine-effect {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                pointer-events: none;
+                z-index: 0;
+            }
+            
+            /* Only allow animation once per page load */
+            &.animated {
+                pointer-events: none;
+                animation: none !important;
+                
+                /* Disable animations for child elements as well */
+                &::after, .shine-effect {
+                    animation: none !important;
+                }
+            }
+            
+            &:hover{
+                background: @link-color;
+                transform: translateY(-5px) rotateY(10deg);
+                box-shadow: -5px 8px 15px rgba(0,0,0,0.2);
+                
+                /* Activate shine effect */
+                .shine-effect {
+                    opacity: 1;
+                    animation: buttonShine 2s 1;
+                }
+                
+                &:after {
+                    background: url("../../assets/images/white-events-arrow.svg") center center no-repeat;
+                    background-size: contain;
+                    transform: translateX(6px) translateZ(10px);
+                    filter: brightness(2);
+                    animation: singleArrowBounce 1s 1 cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+                }
+            }
+            
+            @keyframes singleArrowBounce {
+                0% { transform: translateX(0) translateZ(10px); }
+                40% { transform: translateX(9px) translateZ(10px); }
+                60% { transform: translateX(6px) translateZ(10px); }
+                80% { transform: translateX(8px) translateZ(10px); }
+                100% { transform: translateX(6px) translateZ(10px); }
+            }
+            
+            @keyframes buttonShine {
+                0% { background-position: 200% center; }
+                100% { background-position: -200% center; }
+            }
         }
 
         .body{
@@ -431,3 +527,4 @@
         });
     }
 }
+

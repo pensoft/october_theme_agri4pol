@@ -1,7 +1,7 @@
 {% for partner in partners %}
 <div class="col-xs-12 partner-item">
     <div class="row middle-xs">
-        <div class="col-xs-12 col-md-11 partner_title"><a href="{{partner.instituion_url}}" target="_blank">{{partner.instituion}}</a></div>
+        <div class="col-xs-12 col-md-11 partner_title">{{partner.instituion}}</div>
         <div class="col-xs-12 col-md-1 end-md start-xs partner_country"><span class="country_{{partner.country_code[0]}}"></span></div>
         <div class="col-xs-12 partner_description mt-2">{{partner.content|raw}}</div>
     </div>

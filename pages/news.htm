@@ -219,15 +219,7 @@ $this['related'] = $related;
                             <a href="/news/{{record.slug}}">
                                 <div class="news-title">{{ record.title|length > 100 ? record.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|replace({"&nbsp;": " ", ".": ". "})  }}</div>
                             </a>
-                            <div class="row middle-xs between-xs">
-                                <div class="col-mx-10">
-                                    <div class="news-date">{{ record.published_at|date('d.m.Y') }}</div>
-                                </div>
-                                <div class="col-mx-2 end-xs">
-                                    <a href="/news/{{record.slug}}" class="read_more_arrow"></a>
-                                </div>
-                            </div>
-
+                            <div class="news-date">{{ record.published_at|date('d.m.Y') }}</div>
                         </div>
                         <div class="news-back">
                             <div class="back-content">

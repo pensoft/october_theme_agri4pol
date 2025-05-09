@@ -55,12 +55,11 @@ return Response::download($pathToFile, $fileName, $headers);
                 {% if flyers.count() %}<a href="#project-materials" class="about-menu-item">Project materials</a>{% endif %}
                 {% if videos.count() %}<a href="#videos" class="about-menu-item">Videos</a>{% endif %}
                 {% if images.count() %}<a href="#images" class="about-menu-item">Images</a>{% endif %}
-
         </div>
 
         <!--tabs content	-->
         {% if logos.count() %}
-        <div class="row card-container-row start-xs logo" id="brand-kit">
+        <div class="row card-container-row start-xs logo center-xs-down" id="brand-kit">
             {% for record in logos %}
             {# Use spaceless tag to remove spaces inside the A tag. #}
             {% spaceless %}
@@ -108,7 +107,7 @@ return Response::download($pathToFile, $fileName, $headers);
 
 
         {% if flyers.count() %}
-        <div class="row card-container-row start-xs flyer" id="project-materials" style="display: none;">
+        <div class="row card-container-row start-xs flyer center-xs-down" id="project-materials" style="display: none;">
             {% for record in flyers %}
             {# Use spaceless tag to remove spaces inside the A tag. #}
             {% spaceless %}
@@ -144,7 +143,7 @@ return Response::download($pathToFile, $fileName, $headers);
 
 
         {% if videos.count() %}
-        <div class="row card-container-row" id="videos" style="display: none;">
+        <div class="row card-container-row center-xs-down" id="videos" style="display: none;">
             {% for record in videos %}
             <div class="col-md-6 col-xs-12 mb-4">
                 <div class="videos_container">
@@ -172,6 +171,36 @@ return Response::download($pathToFile, $fileName, $headers);
                     </div>
                 </div>
             </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if images.count() %}
+        <div class="row card-container-row center-xs-down" id="images" style="display: none;">
+            {% for record in images %}
+            {# Use spaceless tag to remove spaces inside the A tag. #}
+            {% spaceless %}
+            {% if record.image %}
+            <div class="col-md-4 col-xs-12 center-xs mb-4">
+                <div class="image_container">
+                    <div class="text-center">
+                        <img class="card_image_container" src="{{record.image.thumb(321,217,{'mode':'crop'})}}" alt="{{record.name}}" title="{{record.name}}">
+                        <span class="card_title" style="min-height: 100px;">{{record.name}}</span>
+                    </div>
+                    {% if record.file %}
+                    <div class="col-xs-12">
+                        <div class="text-center">
+                            {{form_open({ request: 'onDownloadFile' }) }}
+                            <input type="hidden" value="{{record.file.id}}" name="id">
+                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> Download</button>
+                            {{ form_close() }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% endspaceless %}
             {% endfor %}
         </div>
         {% endif %}

@@ -124,7 +124,7 @@ $this['slug'] = $this->param('slug');
                     <div class="col-md-8 col-xs-12">
                         {% if entry.cover_image %}
                         <a href="{{'events'|page}}/{{entry.slug}}">
-                            <img src="{{entry.cover_image.getThumb(auto, auto, {'mode': 'crop'})}}">
+                            <img src="{{entry.cover_image.getThumb(186, 116, {'mode': 'crop'})}}">
                         </a>
                         {% endif %}
 
@@ -133,7 +133,7 @@ $this['slug'] = $this->param('slug');
 
                     </div>
                     <div class="col-md-2 col-xs-12 center-md center-xs">
-                        <a href="{{'events'|page}}/{{entry.slug}}" class="read-more">Read more</a>
+                        <a href="{{'events'|page}}/{{entry.slug}}" class="read-more"></a>
                     </div>
                 </div>
 
@@ -160,7 +160,7 @@ $this['slug'] = $this->param('slug');
                     <div class="col-md-8 col-xs-12">
                         {% if entry.cover_image %}
                         <a href="{{'events'|page}}/{{entry.slug}}">
-                            <img src="{{entry.cover_image.getThumb(auto, auto, {'mode': 'crop'})}}">
+                            <img src="{{entry.cover_image.getThumb(156, 116, {'mode': 'crop'})}}">
                         </a>
                         {% endif %}
 
@@ -169,7 +169,7 @@ $this['slug'] = $this->param('slug');
 
                     </div>
                     <div class="col-md-2 col-xs-12 center-md center-xs">
-                        <a href="{{'events'|page}}/{{entry.slug}}" class="read-more">Read more</a>
+                        <a href="{{'events'|page}}/{{entry.slug}}" class="read-more"></a>
                     </div>
                 </div>
                 {% endfor %}
@@ -217,11 +217,8 @@ $this['slug'] = $this->param('slug');
                             {% if this.theme.linkedin %}
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="btn pr p-primary p-linkedin big"></a>
                             {% endif %}
-
-
                         </div>
                     </div>
-
                 </div>
 
             </div>

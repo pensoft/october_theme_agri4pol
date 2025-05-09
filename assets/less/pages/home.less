@@ -222,6 +222,8 @@
     position: relative;
     overflow: hidden;
 
+    // Grid layout for less than 4 news items is now provided by shared-news-grid in news.less
+
     // Style for the mobile news button container
     .mobile-all-news-container {
         display: none;
@@ -320,7 +322,10 @@
             }
 
         }
-
+        .breakpoint-large-down({
+            margin: 0;
+            padding: 0;
+        });
     }
 
     .news-carousel {
@@ -505,5 +510,12 @@
                 justify-content: flex-start;
             }
         }
+    });
+}
+
+.less-than-4-news{
+    .breakpoint-large-down({
+        padding: 0;
+        margin: 0;
     });
 }

@@ -2,8 +2,12 @@
     margin-top: 100px;
     .breakpoint-large-down({
         margin-top: 0;
+        text-align: center;
     });
     .newsletter_item{
+        .breakpoint-large-down({
+            margin: 0 auto;
+        });
         text-align: center;
         background: @secondary-color;
         padding: 15px;
@@ -18,7 +22,8 @@
 
 .videos_container,
 .flyer_container,
-.logo_container{
+.logo_container,
+.image_container{
     text-align: center;
     background: @secondary-color;
     padding: 15px;
@@ -41,6 +46,11 @@
     form{
         display: inline-flex;
     }
+
+    .breakpoint-large-down({
+        margin: 0 auto;
+        text-align: center;
+    });
 }
 
 .videos_container{
@@ -84,6 +94,7 @@
     margin-top: 100px;
     .breakpoint-large-down({
         margin-top: 0;
+        text-align: center;
     });
     .date{
         color: @yellow-color;
@@ -97,6 +108,15 @@
         font-size: 16px;
         .rounded(5px);
         position: relative;
+
+        .link-btn{
+            .breakpoint-large-down({
+                margin-right: 20px;
+                margin: 0 auto;
+                display: block;
+                text-align: center;
+            });
+        }
     }
 }
 
@@ -113,6 +133,8 @@
         flex-direction: column !important;
         height: auto;
         margin-top: 10px;
+        justify-content: center;
+        align-items: center;
     });
 
     a {
@@ -142,6 +164,15 @@
         margin-top: 100px;
         .breakpoint-large-down({
             margin-top: 0;
+            justify-content: center;
         });
     }
+}
+
+// Add center-xs-down class for responsive centering
+.center-xs-down {
+    .breakpoint-large-down({
+        justify-content: center !important;
+        text-align: center !important;
+    });
 }

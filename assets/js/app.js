@@ -28,6 +28,29 @@ $(document).ready(function() {
     // Add search button to mobile menu after CONTACT
     $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"><a href="#" class="mobile-search-btn" aria-label="Search"></a></div></li>');
 
+    // Update the mobile menu by appending social media icons to the search field
+    function updateMobileMenu() {
+        var socialIcons = '';
+        
+        // Check if LinkedIn button exists in the header (means it's enabled)
+        if ($('.search-and-social-media .btn-linkedin').length > 0) {
+            socialIcons += '<a href="' + $('.search-and-social-media .btn-linkedin').attr('href') + '" class="mobile-social-btn btn-linkedin" aria-label="LinkedIn" target="_blank"></a>';
+        }
+        
+        // Check if BlueSky button exists in the header (means it's enabled)
+        if ($('.search-and-social-media .btn-bluesky').length > 0) {
+            socialIcons += '<a href="' + $('.search-and-social-media .btn-bluesky').attr('href') + '" class="mobile-social-btn btn-bluesky" aria-label="BlueSky" target="_blank"></a>';
+        }
+        
+        // Only update if we have social icons to add
+        if (socialIcons !== '') {
+            $('#menuToggle #menu .search_field .icon-container').append(socialIcons);
+        }
+    }
+
+    // Call the function to update mobile menu with social icons
+    updateMobileMenu();
+
 	var headerNavbar = $('#headerNavbar');
 	var width100 = $('.width100');
 	var innerWidth = $('body').innerWidth();
@@ -91,9 +114,11 @@ $(document).ready(function() {
                     'overflow': 'hidden'
                 });
                 
-                // Make sure search button is the last item - reappend it
+                // Make sure search field is the last item - reappend it
                 if ($('#menuToggle #menu .search_field').length === 0) {
                     $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"><a href="#" class="mobile-search-btn" aria-label="Search"></a></div></li>');
+                    // Update mobile menu with social icons
+                    updateMobileMenu();
                 }
             }else{
                 $('#menu').hide("slide", { direction: "right" }, 400);
@@ -208,33 +233,35 @@ $(document).ready(function() {
 
 
     /* News highlights carousel **/
-    $('.news-carousel').slick({
-        autoplay: false,
-        draggable: true,
-        centerMode: true,
-        variableWidth: false,
-        infinite: true,
-        slidesToShow: 3,
-        speed: 1000,
-        centerPadding: '5%',
-        slidesToScroll: 1,
-        prevArrow: $('.prev-arrow'),
-        nextArrow: $('.next-arrow'),
-        arrows: true,
-        dots: false,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: false,
-                    dots: true,
-                    centerMode: true,
-                    centerPadding: '10%',
-                    slidesToShow: 1
+    if ($('.news-carousel').length > 0 && $('.news-carousel .home-news-highlights').length >= 3) {
+        $('.news-carousel').slick({
+            autoplay: false,
+            draggable: true,
+            centerMode: true,
+            variableWidth: false,
+            infinite: true,
+            slidesToShow: 3,
+            speed: 1000,
+            centerPadding: '5%',
+            slidesToScroll: 1,
+            prevArrow: $('.prev-arrow'),
+            nextArrow: $('.next-arrow'),
+            arrows: true,
+            dots: false,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        dots: true,
+                        centerMode: true,
+                        centerPadding: '10%',
+                        slidesToShow: 1
+                    }
                 }
-            }
-        ]
-    });
+            ]
+        });
+    }
 
     // Initialize work packages toggle
     initWorkPackagesToggle();
@@ -448,5 +475,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 showSearchForm();
             }, 100);
         });
+    }
+    
+    // Initialize mobile menu social icons if needed
+    if (width < 992 && $('#menuToggle #menu .search_field').length > 0) {
+        updateMobileMenu();
     }
 });
