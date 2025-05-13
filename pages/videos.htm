@@ -16,8 +16,8 @@ detailsUrlParameter = "id"
 pageNumber = "{{ :page }}"
 
 [jumbotron]
-jumbotron = "under-construction"
-title = 1
+jumbotron = "newsletter-coming-soon"
+title = 0
 background = "transperant"
 templates = "template1"
 description_limit = 0
@@ -109,6 +109,10 @@ return Response::download($pathToFile, $fileName, $headers);
         {% else %}
         {{ noRecordsMessage }}
         {% endfor %}
+    </div>
+    {% else %}
+    <div class="container-fluid coming_soon">
+        {% component 'jumbotron' %}
     </div>
     {% endif %}
 </div>

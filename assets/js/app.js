@@ -44,7 +44,10 @@ $(document).ready(function() {
         
         // Only update if we have social icons to add
         if (socialIcons !== '') {
-            $('#menuToggle #menu .search_field .icon-container').append(socialIcons);
+            // Clear existing icons first to prevent duplicates
+            $('#menuToggle #menu .search_field .icon-container').html('');
+            // Add search button and social icons
+            $('#menuToggle #menu .search_field .icon-container').html('<a href="#" class="mobile-search-btn" aria-label="Search"></a>' + socialIcons);
         }
     }
 
@@ -107,16 +110,20 @@ $(document).ready(function() {
             if(checked){
                 $('#menu').show("slide", { direction: "right" }, 400);
                 $('#search').hide();
-                $('#menu, #menu *').css({
+                // Fix: Make all elements in menu visible immediately, including dropdown menu items
+                $('#menu, #menu *, #menu .dropdown-menu, #menu .dropdown-menu *').css({
                     'visibility': 'visible'
                 });
+                // Make dropdown menu items visible in a proper way
+                $('#menu .dropdown-menu').css('display', 'none');
+                
                 $('body', 'html').css({
                     'overflow': 'hidden'
                 });
                 
                 // Make sure search field is the last item - reappend it
                 if ($('#menuToggle #menu .search_field').length === 0) {
-                    $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"><a href="#" class="mobile-search-btn" aria-label="Search"></a></div></li>');
+                    $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"></div></li>');
                     // Update mobile menu with social icons
                     updateMobileMenu();
                 }
@@ -145,6 +152,41 @@ $(document).ready(function() {
             }, 400);
             
             return false;
+        });
+
+        // --- MOBILE SUBMENU TOGGLE LOGIC ---
+        // Only for mobile: clicking a parent with submenu toggles its dropdown-menu
+        $(document).on('click', '#menu .dropdown > a', function(e) {
+            // Only act if in mobile
+            if (window.innerWidth >= 992) return;
+            var $parent = $(this).parent('.dropdown');
+            var $submenu = $parent.children('.dropdown-menu');
+            if ($submenu.length) {
+                e.preventDefault();
+                
+                // Toggle expanded class for arrow rotation
+                $(this).toggleClass('expanded');
+                
+                // Toggle submenu with smooth animation
+                $submenu.slideToggle(250);
+                
+                // Toggle special class on parent for border styling
+                $parent.toggleClass('submenu-open');
+                
+                // Close other open submenus and reset their expanded state
+                $parent.siblings('.dropdown').children('.dropdown-menu:visible').slideUp(200);
+                $parent.siblings('.dropdown').children('a').removeClass('expanded');
+                $parent.siblings('.dropdown').removeClass('submenu-open');
+            }
+        });
+        // Hide all submenus when menu closes
+        $('#menuToggle input[type="checkbox"]').change(function(){
+            if (!$(this).is(":checked")) {
+                $('#menu .dropdown-menu').hide();
+                // Reset expanded state
+                $('#menu .dropdown > a').removeClass('expanded');
+                $('#menu .dropdown').removeClass('submenu-open');
+            }
         });
     }
 
@@ -279,6 +321,9 @@ $(document).ready(function() {
             $(this).closest('form').submit();
         }
     });
+
+    // Initialize events page functionality
+    initEventsPage();
 });
 
 function goToPage(url){
@@ -477,8 +522,146 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize mobile menu social icons if needed
-    if (width < 992 && $('#menuToggle #menu .search_field').length > 0) {
+    // Always rebuild the mobile menu social icons on page load
+    if (width < 992) {
+        // First ensure the search field container exists
+        if ($('#menuToggle #menu .search_field').length === 0) {
+            $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"></div></li>');
+        }
+        // Then update it with icons
         updateMobileMenu();
     }
+    
+    // Initialize proper mobile submenu functionality
+    initMobileMenu();
 });
+
+// Handle mobile submenu visibility
+function initMobileMenu() {
+    // If we're in mobile view
+    if (width < 992) {
+        // Make sure dropdown menus are properly set up
+        $('#menu .dropdown-menu').each(function() {
+            $(this).css('display', 'none');
+            $(this).css('visibility', 'visible');
+        });
+        
+        // Ensure all elements in the menu are properly visible
+        $('#menu li, #menu a').css('visibility', 'visible');
+    }
+}
+
+// Update mobile menu on window resize
+$(window).resize(function() {
+    // Update width variable
+    width = window.innerWidth;
+    
+    if (width < 992) {
+        initMobileMenu();
+    }
+});
+
+/**
+ * Events page functionality
+ * Handles tab switching and making cards clickable on mobile
+ */
+function initEventsPage() {
+    // Only run on events page
+    if (!document.querySelector('.events_tabs')) return;
+    
+    // Tab switching functionality
+    function setupTabSwitching() {
+        const listViewTab = document.querySelector('.events_tabs a[href="#listView"]');
+        const calendarViewTab = document.querySelector('.events_tabs a[href="#calendarView"]');
+        const listView = document.getElementById('listView');
+        const calendarView = document.getElementById('calendarView');
+        
+        if (!listViewTab || !calendarViewTab || !listView || !calendarView) return;
+        
+        // List view tab click handler
+        listViewTab.addEventListener('click', function(e) {
+            e.preventDefault();
+            listView.style.display = 'block';
+            calendarView.style.display = 'none';
+            listViewTab.classList.add('active');
+            calendarViewTab.classList.remove('active');
+        });
+        
+        // Calendar view tab click handler
+        calendarViewTab.addEventListener('click', function(e) {
+            e.preventDefault();
+            listView.style.display = 'none';
+            calendarView.style.display = 'block';
+            calendarViewTab.classList.add('active');
+            listViewTab.classList.remove('active');
+            
+            // Force calendar to redraw when shown
+            if (window.FullCalendar && calendarView.querySelector('.fc')) {
+                // Get the calendar instance
+                const calendarElement = calendarView.querySelector('.fc');
+                
+                // Trigger a window resize event to force calendar to redraw
+                window.dispatchEvent(new Event('resize'));
+                
+                // If the calendar has a FullCalendar API instance
+                if (calendarElement && calendarElement.fullCalendar) {
+                    // Refresh the calendar view
+                    calendarElement.fullCalendar('render');
+                } else if (calendarElement && calendarElement._calendar) {
+                    // For newer versions of FullCalendar (v4+)
+                    calendarElement._calendar.render();
+                } else {
+                    // Backup solution - wait a moment then trigger window resize
+                    setTimeout(function() {
+                        window.dispatchEvent(new Event('resize'));
+                    }, 200);
+                }
+            }
+        });
+        
+        // Check if URL has the calendar view hash
+        if (window.location.hash === '#calendarView') {
+            // Trigger a click on the calendar tab
+            calendarViewTab.click();
+        }
+    }
+    
+    // Make event cards clickable on mobile
+    function setupMobileCardClicks() {
+        // Only apply on mobile devices
+        if (window.innerWidth > 768) return;
+        
+        const eventItems = document.querySelectorAll('.entry_item');
+        
+        eventItems.forEach(function(item) {
+            const linkElement = item.querySelector('.date_week');
+            
+            if (!linkElement) return;
+            
+            const href = linkElement.getAttribute('href');
+            
+            // Remove existing click listeners to prevent duplicates
+            item.removeEventListener('click', cardClickHandler);
+            
+            // Add click listener
+            item.addEventListener('click', cardClickHandler);
+            
+            // Click handler function
+            function cardClickHandler(e) {
+                // Only navigate if click wasn't on a link or image
+                if (!e.target.closest('a')) {
+                    window.location.href = href;
+                }
+            }
+        });
+    }
+    
+    // Run setup functions
+    setupTabSwitching();
+    setupMobileCardClicks();
+    
+    // Update mobile functionality on window resize
+    window.addEventListener('resize', function() {
+        setupMobileCardClicks();
+    });
+}

@@ -125,10 +125,13 @@ $this['related'] = $related;
 ?>
 ==
 
-<div class="container-fluid menu-container">
-    <div class="header-bg">
-        <h1>News</h1>
+<div class="container-fluid">
+    <div class="container-fluid menu-container">
+        <div class="header-bg">
+            <h1>News</h1>
+        </div>
     </div>
+
     <div class="container">
 
         {% if is_detail_page %}
@@ -147,8 +150,8 @@ $this['related'] = $related;
                     </div>
 
                     <div class="row share_container middle-xs">
-                        <div class="col-cx-2 start-xs">Share</div>
-                        <div class="col-cx-10 end-xs">
+                        <div class="share-text-desktop">Share</div>
+                        <div class="social-icons">
                             {% if this.theme.bluesky %}
                             <a href="https://bsky.app/intent/compose?text={{article.title}}20%{{page_url}}" target="_blank" class="btn pr p-primary p-bluesky normal" style="position: relative;"></a>
                             {% endif %}
@@ -162,6 +165,7 @@ $this['related'] = $related;
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="btn pr p-primary p-linkedin big"></a>
                             {% endif %}
                         </div>
+                        <div class="share-text-mobile">Share</div>
                     </div>
                 </div>
 
@@ -198,9 +202,10 @@ $this['related'] = $related;
 
             </div>
         </div>
-        <div class="row">
-            <a href="/news" class="go-back">Back to news</a>
+        <div class="row news-back-button">
+            <a href="/news" class="btn btn-primary go-back">Back to news</a>
         </div>
+
 
         {% else %}
 

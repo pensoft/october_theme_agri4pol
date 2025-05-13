@@ -15,9 +15,12 @@ templates = "template1"
 description_limit = 0
 ==
 {% component 'siteSearchInclude' %}
-<h1 class="underline">Privacy policy</h1>
-   <div class="container">
-    {% component 'jumbotron' %}
+<div class="container-fluid mt-1">
+   <div class="header-bg">
+      <h1>Privacy policy</h1>
    </div>
+</div>
 
-   <script src="https://matomo.pensoft.net/index.php?module=CoreAdminHome&action=optOutJS&divId=matomo-opt-out&language=auto&showIntro=1"></script>
+{% component 'jumbotron' %}
+
+<script src="https://matomo.pensoft.net/index.php?module=CoreAdminHome&action=optOutJS&divId=matomo-opt-out&language=auto&showIntro=1"></script>

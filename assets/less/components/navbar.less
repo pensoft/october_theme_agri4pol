@@ -69,6 +69,18 @@
     }
 }
 
+// Add keyframes for mobile menu animation
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .navbar {
     position: absolute;
     top: 0;
@@ -122,6 +134,12 @@
             opacity: 0;
             border-radius: 0px 0px 8px 8px;
 
+            // Disable animation in mobile view
+            @media (max-width: 1000px) {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
 
             &:nth-of-type(1) {
                 animation-delay: 0ms;
@@ -581,8 +599,8 @@
         width: 100vw;
         height: 100vh;
         margin: -40px 0 0 -93vw;
-        padding: 17px 0 0 0;
-        background-color: @dark-color;
+        padding: 100px 0 0 0;
+        background-color: #222C2D;
         color: @white-color!important;
         font-size: 16px!important;
         -webkit-font-smoothing: antialiased;
@@ -592,43 +610,140 @@
         font-weight: 400;
         text-align: center;
         overflow-y: scroll;
+        background-image: none;
     }
 
     #menu li
     {
-        //padding: 24px  0 0 0;
         transition-delay: 2s;
         text-align: center;
-        width: 100%;
+        width: 85%;
         .breakpoint-large-down({
-            padding: 18px  0 0 0;
+            padding: 0;
         })
     }
 
     #menu li a{
-        float: left;
+        float: none;
         width: 100%;
         display: block!important;
     }
 
     #menu li:not(.social) a{
         color: @white-color;
-        padding: 5px 0;
-        float: left;
+        padding: 15px 20px;
         width: 100%;
-        font-size: 20px;
-        font-weight: 400;
-        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+        transition: all 0.3s ease;
+        text-align: left;
+        
+        &:hover {
+            color: #EFD516;
+        }
     }
 
+    // Improved mobile menu styling
+    #menu {
+        // Remove the logo/branding since it doesn't look good
+        &:before {
+            display: none;
+        }
+        
+        // Fix dropdown appearance
+        .dropdown {
+            position: relative;
+            // Simplify main menu item styling
+            > a {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                margin: 0;
+                padding: 15px 20px !important;
+                width: 100% !important;
+                position: relative;
+                font-weight: 500 !important;
+                text-align: left;
+                
+                // Improve arrow indicator
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 14px;
+                    height: 14px;
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    transition: transform 0.3s ease;
+                    opacity: 0.8;
+                }
+                
+                // Rotate arrow when submenu is open
+                &.expanded:after {
+                    transform: translateY(-50%) rotate(180deg);
+                }
+            }
+            
+            // Fix dropdown menu styling
+            .dropdown-menu {
+                background-color: #222C2D;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100%;
+                
+                li {
+                    padding: 0 !important;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                    
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    
+                    a {
+                        font-size: 16px !important;
+                        padding: 12px 30px !important;
+                        margin: 0 !important;
+                        font-weight: 400 !important;
+                        text-align: left;
+                        opacity: 1;
+                        animation: none;
+                    }
+                }
+            }
+        }
+        
+        // Fix regular menu items
+        > li:not(.dropdown):not(.search_field) > a {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 0 !important;
+            padding: 15px 20px !important;
+            width: 100% !important;
+            text-align: left;
+            font-weight: 500 !important;
+            transition: all 0.3s ease;
+        }
+        
+        // Make CONTACT bottom border special as it's the last main menu item
+        > li:last-child:not(.dropdown):not(.search_field) > a {
+            border-bottom: none;
+        }
+        
+        // Style active menu items
+        .active > a {
+            color: #EFD516 !important;
+        }
+    }
 
     #menu{
         .search_field{
             width: 100%;
-            margin: 30px auto 20px;
+            margin: 20px auto;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
+            border-top: none;
+            padding-top: 10px;
             
             .icon-container {
                 display: flex;
@@ -636,40 +751,52 @@
                 align-items: center;
                 width: 100%;
                 flex-wrap: wrap;
-                gap: 15px;
+                gap: 20px;
+                padding: 20px 0;
             }
             
             a.mobile-search-btn {
-                display: block;
-                background: url('../../assets/images/search_white.svg') center no-repeat;
-                background-size: contain;
-                width: 33px !important;
-                height: 33px !important;
-                opacity: 0.9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #EFD516 url('../../assets/images/search.svg') center no-repeat;
+                background-size: 18px;
+                width: 44px !important;
+                height: 44px !important;
+                opacity: 1;
+                transition: all 0.3s ease;
+                border-radius: 4px;
                 
                 &:hover {
-                    opacity: 1;
+                    opacity: 0.9;
+                    transform: translateY(-3px);
                 }
             }
             
             a.mobile-social-btn {
-                display: block;
-                width: 33px !important;
-                height: 33px !important;
-                opacity: 0.9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px !important;
+                height: 24px !important;
+                opacity: 1;
+                transition: all 0.3s ease;
+                border-radius: 4px;
+                background-color: #EFD516;
                 
                 &:hover {
-                    opacity: 1;
+                    opacity: 0.9;
+                    transform: translateY(-3px);
                 }
                 
                 &.btn-linkedin {
-                    background: url('../../assets/images/linkedin_white.svg') center no-repeat;
-                    background-size: contain;
+                    background: #EFD516 url('../../assets/images/linkedin.svg') center no-repeat;
+                    background-size: 24px;
                 }
                 
                 &.btn-bluesky {
-                    background: url('../../assets/images/bluesky_white.svg') center no-repeat;
-                    background-size: contain;
+                    background: #EFD516 url('../../assets/images/bluesky.svg') center no-repeat;
+                    background-size: 24px;
                 }
             }
         }
@@ -701,56 +828,77 @@
 
     #menuToggle .dropdown-menu{
         list-style-type: none!important;
-        // font-size: 0.8em;
-        margin-top: 10px;
-
-        li{
-            padding-right: 0!important;
-            padding-top: 0!important;
-            a{
-                color: #efefef;
+        margin-top: 0;
+        display: none;
+        padding: 0;
+        // background-color: rgba(0, 0, 0, 0.2);
+        
+        li {
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin: 0 !important;
+            
+            a {
+                color: #efefef !important;
+                opacity: 1 !important;
+                animation: none !important;
+                font-size: 15px !important;
+                padding: 12px 30px !important;
+                font-weight: normal !important;
+                text-align: left !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                margin: 0 !important;
+                
+                &:hover {
+                    color: #EFD516 !important;
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+            
+            &:last-child a {
+                border-bottom: none;
             }
         }
-
     }
 
-    #menuToggle .dropdown  span{
+    // Improve active states for dropdown menu items
+    #menu .dropdown-menu li.active > a,
+    #menu .dropdown-menu li.selected > a {
+        color: #EFD516 !important;
+        // background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    // Override search field styles
+    #menu .search_field {
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: none;
+    }
+
+    #menuToggle .dropdown span {
         display: none;
     }
     
-    .nav-item.social{
+    // Remove duplicate styles for social items
+    .nav-item.social {
         display: inline-flex;
         flex-direction: row;
         flex-wrap: nowrap;
         width: 100%;
         justify-content: center;
         margin-bottom: 20px;
-        padding-bottom: 50px;
+        padding-bottom: 30px;
     }
 
-    .nav-item.search_field{
-        a{
-            margin: 0;
-            background: url('../../assets/images/search_white.svg') center no-repeat;
-            background-size: contain;
-            width: 33px!important;
-            height: 33px;
-            display: inline-flex;
-        }
-    }
-
-    .nav-item.social{
-        a{
-            color: @link-color;
-            display: inline-flex;
-            margin: 5px 4px;
-            width: 33px!important;
-            height: 33px;
-            &:hover{
-                opacity: 0.7!important;
-            }
-
-        }
+    // Remove these old search field styles as they're now handled above
+    .nav-item.search_field {
+        display: block;
+        width: 100%;
+        margin: 30px auto 20px;
+        padding: 20px 0;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 }
 
@@ -1049,4 +1197,86 @@
     @media (max-width: 1000px) {
         display: flex;
     }
+}
+
+// Fix background pattern
+#menu {
+    background-image: none;
+}
+
+// Highlight active menu item (NEWS & EVENTS in the screenshot)
+@media (max-width: 1000px) {
+    #menu li.active > a, 
+    #menu li.selected > a {
+        color: #EFD516 !important;
+    }
+}
+
+// Match the social icons with the site styling
+#menu .search_field .icon-container a.mobile-search-btn,
+#menu .search_field .icon-container a.mobile-social-btn {
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 12px;
+    border-radius: 4px;
+    background-color: #EFD516;
+}
+
+#menu .search_field .icon-container a.mobile-search-btn{
+    background-size: 38px !important;
+}
+
+// Improve mobile menu styling
+#menuToggle .dropdown-menu{
+    list-style-type: none!important;
+    margin-top: 0;
+    display: none;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    
+    li {
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin: 0 !important;
+        
+        a {
+            color: #efefef !important;
+            opacity: 1 !important;
+            animation: none !important;
+            font-size: 15px !important;
+            padding: 12px 30px !important;
+            font-weight: normal !important;
+            text-align: left !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 0 !important;
+            
+            &:hover {
+                color: #EFD516 !important;
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        &:last-child a {
+            border-bottom: none;
+        }
+    }
+}
+
+// Fix mobile menu double borders
+#menu > li.dropdown {
+    // Add style for dropdown parents with open submenu
+    &.submenu-open > a {
+        border-bottom: none;
+    }
+    
+    // Remove top border from first dropdown item
+    .dropdown-menu li:first-child a {
+        border-top: none;
+    }
+}
+
+// Fix CONTACT menu item border
+#menu > li:nth-last-child(2):not(.search_field) > a {
+    border-bottom: none;
 }

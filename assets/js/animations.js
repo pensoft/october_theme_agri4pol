@@ -110,7 +110,7 @@ function animateNumbers() {
     if (window.numbersAnimated) return;
 
     const numberElements = document.querySelectorAll('.number');
-    const finalNumbers = [23, 4, 14, 8];
+    const finalNumbers = [20, 4, 14, 8];
     const duration = 2000;
     const frameDuration = 1000 / 60;
     const totalFrames = Math.round(duration / frameDuration);
