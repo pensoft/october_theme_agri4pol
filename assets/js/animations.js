@@ -109,12 +109,64 @@ function animateSubtitleWords(element) {
 function animateNumbers() {
     if (window.numbersAnimated) return;
 
+    // Default values in case data attributes are not available
+    const defaultValues = {
+        'Partners': 20,
+        'Years': 4,
+        'Countries': 10,
+        'Work': 8
+    };
+
     const numberElements = document.querySelectorAll('.number');
-    const finalNumbers = [20, 4, 14, 8];
+    if (numberElements.length === 0) return;
+
+    // Store the original values from HTML or data attributes
+    const finalNumbers = [];
+    
+    // First set data-value attributes if they don't exist yet
+    // This preserves the original values even if we've reset the display to 0
+    numberElements.forEach(el => {
+        if (!el.dataset.value) {
+            const originalValue = parseInt(el.textContent.trim(), 10);
+            if (!isNaN(originalValue) && originalValue > 0) {
+                // Store the original value as a data attribute
+                el.dataset.value = originalValue;
+            } else {
+                // If we can't get a valid value, try to determine which statistic this is
+                const descriptionEl = el.closest('.col-md-3')?.querySelector('.number-description .title');
+                const title = descriptionEl ? descriptionEl.textContent.trim().split('\n')[0].trim() : '';
+                
+                // Find the first matching default value
+                for (const key in defaultValues) {
+                    if (title.includes(key)) {
+                        el.dataset.value = defaultValues[key];
+                        break;
+                    }
+                }
+                
+                // If still no value, use a fallback
+                if (!el.dataset.value) {
+                    el.dataset.value = 0;
+                }
+            }
+        }
+        
+        // Now get the values from data attributes
+        finalNumbers.push(parseInt(el.dataset.value, 10));
+    });
+    
+    // Debug - log the values we'll animate to
+    console.log("Final numbers to animate to:", finalNumbers);
+
     const duration = 2000;
     const frameDuration = 1000 / 60;
     const totalFrames = Math.round(duration / frameDuration);
     let frame = 0;
+    
+    // Reset all numbers to zero to start the animation
+    numberElements.forEach(el => {
+        el.textContent = "0";
+    });
 
     const countUp = () => {
         frame++;

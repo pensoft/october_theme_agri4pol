@@ -144,7 +144,11 @@ p:has(.edit-link){
   });
 }
 
-.privacy{
+.privacy-policy-section{
+    p {
+        width: 100%;
+    }
+
     a{
         color: @yellow-color;
         &:hover{
@@ -256,4 +260,18 @@ ul.pagination{
   border: none!important;
   background: none!important;
   color: unset!important;
+}
+
+.menu-container{
+    margin-top: 30px;
+    position: relative;
+    padding: 0;
+
+    .breakpoint-large-down({
+        margin-top: 0;
+        margin-bottom: 0;
+    });
+    .container{
+        padding: 0;
+    }
 }
