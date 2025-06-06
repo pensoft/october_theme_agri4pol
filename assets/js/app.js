@@ -27,6 +27,24 @@ $(document).ready(function() {
 
     // Add search button to mobile menu after CONTACT
     $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"><a href="#" class="mobile-search-btn" aria-label="Search"></a></div></li>');
+    
+    // Quickfix for submenu sections on Media Center
+    $('.dropdown-menu a[href*="#"]').click(function(e) {
+        // Check if this is a Media Centre submenu item
+        if($(this).closest('.dropdown').find('> a:first').text().trim().includes('Media Centre')) {
+            // e.preventDefault();
+            var href = $(this).attr('href');
+            // If it's just a hash link on same page, reload the page with hash
+            if(href.startsWith('#')) {
+                window.location.href = window.location.pathname + href;
+                location.reload();
+            } else {
+                // If it has a path and hash
+                window.location.href = href;
+                location.reload();
+            }
+        }
+    });
 
     // Update the mobile menu by appending social media icons to the search field
     function updateMobileMenu() {

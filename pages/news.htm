@@ -124,7 +124,6 @@ $this['related'] = $related;
 }
 ?>
 ==
-
 <div class="container-fluid">
     <div class="container-fluid menu-container">
         <div class="header-bg">
@@ -173,7 +172,7 @@ $this['related'] = $related;
             <div class="col-xs-12 col-md-5">
                 {% if article.cover %}
                 <div class="row center-xs">
-                    <img class="left" src="{{ article.cover|crop_image|resize(448, auto, { mode: 'crop' }) }}" />
+                    <img src="{{ article.cover.thumb(448, auto, {'mode':'crop'})}}" alt="{{ article.title }}">
                     {% if article.caption %}
                     {{article.caption|raw}}
                     {% endif %}
