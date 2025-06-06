@@ -60,6 +60,11 @@ $(document).ready(function() {
             socialIcons += '<a href="' + $('.search-and-social-media .btn-bluesky').attr('href') + '" class="mobile-social-btn btn-bluesky" aria-label="BlueSky" target="_blank"></a>';
         }
         
+        // Check if YouTube button exists in the header (means it's enabled)
+        if ($('.search-and-social-media .btn-youtube').length > 0) {
+            socialIcons += '<a href="' + $('.search-and-social-media .btn-youtube').attr('href') + '" class="mobile-social-btn btn-youtube" aria-label="YouTube" target="_blank"></a>';
+        }
+        
         // Only update if we have social icons to add
         if (socialIcons !== '') {
             // Clear existing icons first to prevent duplicates
