@@ -70,7 +70,7 @@ return Response::download($pathToFile, $fileName, $headers);
 ?>
 ==
 
-<div class="container media-images-container">
+<div class="container media-images-container images">
     <div class="row media_images news">
         <div class="col-md-12 col-xs-12 mb-2">
             <a href="/media-center#images" class="go-back-link">Back to Media Center</a>
@@ -98,7 +98,7 @@ return Response::download($pathToFile, $fileName, $headers);
             </div>
             {% endfor %}
 
-            <div class="control-popup" id="imagesModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+            <div class="control-popup modal" id="imagesModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <button type="button" class="close" aria-label="Close gallery">
