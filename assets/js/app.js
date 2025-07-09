@@ -347,6 +347,9 @@ $(document).ready(function() {
 
     // Initialize events page functionality
     initEventsPage();
+    
+    // Initialize gallery lightbox functionality
+    initGalleryLightbox();
 });
 
 function goToPage(url){
@@ -395,13 +398,13 @@ function init() {
                     autoplay: true,
                     autoplaySpeed: 6000,
                     prevArrow: '<i class="slick-prev"/>',
-                    nextArrow: '<i class="slick-next"/>',
+                    nextArrow: '<i class="slick-next"/>', 
                 });
              }
         }
 
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {v
         if (!isBreakpointLarge()) {
             if (typeof cardCarousel === 'function') {
                 cardCarousel({
@@ -687,4 +690,224 @@ function initEventsPage() {
     window.addEventListener('resize', function() {
         setupMobileCardClicks();
     });
+}
+
+
+// Gallery Lightbox functionality
+var slideIndex = 1;
+
+function openModal() {
+    var modal = document.getElementById('imagesModal');
+    if (modal) {
+        modal.style.display = 'block';
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Add event listeners for keyboard navigation
+        document.addEventListener('keydown', handleKeyboardNavigation);
+        
+        // Ensure arrows are positioned correctly after modal opens
+        setTimeout(function() {
+            positionArrowsCorrectly();
+        }, 150);
+    }
+}
+
+function closeModal() {
+    var modal = document.getElementById('imagesModal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+        
+        // Remove event listeners
+        document.removeEventListener('keydown', handleKeyboardNavigation);
+    }
+}
+
+function handleKeyboardNavigation(e) {
+    switch(e.key) {
+        case 'Escape':
+            closeModal();
+            break;
+        case 'ArrowLeft':
+            plusSlides(-1);
+            break;
+        case 'ArrowRight':
+            plusSlides(1);
+            break;
+    }
+}
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    var slides = document.getElementsByClassName("slides");
+    if (!slides.length) return;
+    
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    
+    for (var i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        slides[i].classList.remove('active');
+    }
+    
+    if (slides[slideIndex-1]) {
+        slides[slideIndex-1].style.display = "flex";
+        slides[slideIndex-1].classList.add('active');
+        
+        // Ensure arrows are properly positioned after slide change
+        setTimeout(function() {
+            positionArrowsCorrectly();
+        }, 100);
+    }
+}
+
+// Function to ensure arrows are positioned at image edges
+function positionArrowsCorrectly() {
+    var modal = document.getElementById('imagesModal');
+    if (!modal || !modal.classList.contains('show')) return;
+    
+    var activeSlide = modal.querySelector('.slides.active');
+    if (!activeSlide) return;
+    
+    var img = activeSlide.querySelector('img');
+    if (!img) return;
+    
+    // Wait for image to be fully loaded if needed
+    if (img.complete) {
+        updateArrowPositions(img);
+    } else {
+        img.addEventListener('load', function() {
+            updateArrowPositions(img);
+        });
+    }
+}
+
+function updateArrowPositions(img) {
+    // This function can be expanded if we need more precise positioning
+    // For now, the CSS calc() approach should work well
+    // But we can add dynamic adjustments here if needed
+}
+
+// Initialize gallery functionality when DOM is ready
+function initGalleryLightbox() {
+    // Add click event listeners to gallery image triggers
+    const galleryTriggers = document.querySelectorAll('.gallery-image-trigger');
+    
+    galleryTriggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            const slideNumber = parseInt(this.dataset.slide);
+            openModal();
+            currentSlide(slideNumber);
+        });
+    });
+    
+    // Add click event listener to modal background for closing
+    const modal = document.getElementById('imagesModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Add touch/swipe functionality for mobile
+        addTouchSupport(modal);
+    }
+    
+    // Add click event listeners to navigation arrows
+    const prevBtn = document.querySelector('#imagesModal .prev');
+    const nextBtn = document.querySelector('#imagesModal .next');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            plusSlides(-1);
+        });
+        
+        // Add keyboard support for arrows
+        prevBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                plusSlides(-1);
+            }
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            plusSlides(1);
+        });
+        
+        // Add keyboard support for arrows
+        nextBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                plusSlides(1);
+            }
+        });
+    }
+    
+    // Add click event listener to close button
+    const closeBtn = document.querySelector('#imagesModal .close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeModal();
+        });
+    }
+    
+    // Handle window resize to reposition arrows
+    window.addEventListener('resize', function() {
+        if (modal && modal.classList.contains('show')) {
+            setTimeout(function() {
+                positionArrowsCorrectly();
+            }, 100);
+        }
+    });
+}
+
+// Touch/swipe support for mobile devices
+function addTouchSupport(modal) {
+    let startX = 0;
+    let startY = 0;
+    let endX = 0;
+    let endY = 0;
+    const minSwipeDistance = 50;
+    
+    modal.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    modal.addEventListener('touchend', function(e) {
+        endX = e.changedTouches[0].clientX;
+        endY = e.changedTouches[0].clientY;
+        
+        const deltaX = endX - startX;
+        const deltaY = endY - startY;
+        
+        // Check if the swipe is primarily horizontal
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // Swipe right - go to previous image
+                    plusSlides(-1);
+                } else {
+                    // Swipe left - go to next image
+                    plusSlides(1);
+                }
+            }
+        }
+    }, { passive: true });
 }
