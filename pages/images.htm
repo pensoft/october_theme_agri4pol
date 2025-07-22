@@ -1,4 +1,4 @@
-url = "/media-center/images/:id|[0-9]+"
+url = "/media-center/images/:id?|[a-zA-Z\-0-9]"
 layout = "default"
 title = "Gallery"
 is_hidden = 0
@@ -97,7 +97,6 @@ return Response::download($pathToFile, $fileName, $headers);
                 </div>
             </div>
             {% endfor %}
-            
 
             <div class="control-popup modal" id="imagesModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
