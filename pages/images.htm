@@ -21,7 +21,7 @@ function onStart(){
 	$gallery_id = $this->param('id');
 	$this['gallery'] = Galleries::where('id', $gallery_id)->first();
 	$this['id'] = $gallery_id;
-	
+
 	// If no gallery found, redirect to media center
 	if (!$this['gallery']) {
 		return Redirect::to('/media-center#images');
@@ -75,7 +75,7 @@ return Response::download($pathToFile, $fileName, $headers);
         <div class="col-md-12 col-xs-12 mb-2">
             <a href="/media-center#images" class="go-back-link">Back to Media Center</a>
         </div>
-        
+
         {% if gallery and gallery.name %}
         <div class="col-md-12 col-xs-12 mb-3">
             <h2>{{ gallery.name }}</h2>
@@ -97,6 +97,7 @@ return Response::download($pathToFile, $fileName, $headers);
                 </div>
             </div>
             {% endfor %}
+            
 
             <div class="control-popup modal" id="imagesModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
