@@ -331,6 +331,9 @@ $(document).ready(function() {
     // Initialize work packages toggle
     initWorkPackagesToggle();
 
+    // Initialize work packages layout
+    initWorkPackagesLayout();
+
     // Add click event to close modal when clicking outside
     $('#searchModalOverlay').on('click', function(e) {
         if (e.target === this) {
@@ -420,6 +423,9 @@ function init() {
 
         // Initialize work packages toggle
         initWorkPackagesToggle();
+        
+        // Initialize work packages layout
+        initWorkPackagesLayout();
     });
 }
 
@@ -523,6 +529,25 @@ function initWorkPackagesToggle() {
     }
 }
 
+/**
+ * Handle mobile/desktop layout switching for work packages
+ */
+function initWorkPackagesLayout() {
+    var isMobile = window.innerWidth <= 768;
+    var $mobileLayout = $('.work-packages-mobile');
+    var $desktopLayout = $('.work-packages-container');
+    
+    if (isMobile) {
+        // Show mobile layout, hide desktop layout
+        $mobileLayout.show();
+        $desktopLayout.hide();
+    } else {
+        // Show desktop layout, hide mobile layout
+        $mobileLayout.hide();
+        $desktopLayout.show();
+    }
+}
+
 init()
 
 // Add mobile search functionality
@@ -560,6 +585,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize proper mobile submenu functionality
     initMobileMenu();
+    
+    // Initialize work packages layout
+    initWorkPackagesLayout();
 });
 
 // Handle mobile submenu visibility
@@ -585,6 +613,9 @@ $(window).resize(function() {
     if (width < 992) {
         initMobileMenu();
     }
+    
+    // Update work packages layout on resize
+    initWorkPackagesLayout();
 });
 
 /**

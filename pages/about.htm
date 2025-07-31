@@ -85,6 +85,32 @@ function onStart(){
                 <div class="work-packages-sidebar">
                     <div class="vertical-text">WORK PACKAGES</div>
                 </div>
+                
+                <!-- Mobile layout - natural order, hidden by default -->
+                <div class="work-packages-mobile" style="display: none;">
+                    {% for item in work_packages_records %}
+                    <div class="work-package-box">
+                        <div class="wp-header">
+                            {{item.prefix}}
+                        </div>
+                        <div class="wp-title">
+                            <h3>{{ item.title }}</h3>
+                        </div>
+                        <div class="wp-content" style="display: none;">
+                            <div class="wp-content-inner">
+                                {{ item.body|raw }}
+                            </div>
+                        </div>
+                        <div class="wp-arrow">
+                            <a href="javascript:void(0)" class="arrow-toggle">
+                                <span class="arrow-down"></span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Desktop layout - odd/even columns -->
                 <div class="row work-packages-container">
                     <div class="col-md-6 col-xs-12">
                         {% for item in work_packages_records %}
