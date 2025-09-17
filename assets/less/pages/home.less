@@ -286,6 +286,10 @@
                 display: flex;
                 align-items: center;
                 justify-content: end;
+                @media (max-width: 1024px) {
+                    flex-wrap: nowrap;
+                }
+
                 .breakpoint-large-down({
                     justify-content: center;
                 });
@@ -526,4 +530,10 @@
         padding: 0;
         margin: 0;
     });
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .subscribe-text, .subscribe-button{
+        padding-top: 40px;
+    }
 }

@@ -211,7 +211,7 @@ $this['related'] = $related;
         <div class="news-list">
             {% for record in records %}
             {% spaceless %}
-                <div class="col-md-4 col-xs-12 center-xs center-md mb-2">
+                <div class="col-lg-4 col-md-6 col-xs-12 center-xs center-md mb-2">
                     <div class="row news-item">
                         <div class="col-md-12 col-xs-12 home-news-cover">
                             <a class="news-item-link" href="/news/{{record.slug}}">
@@ -239,7 +239,7 @@ $this['related'] = $related;
             {% endfor %}
         </div>
 
-        <div class="row container">
+        <div class="pagination-container">
             {{ records.render|raw }}
         </div>
 

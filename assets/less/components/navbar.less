@@ -112,6 +112,11 @@
         flex-basis: 217px;
         height: 74px;
         margin-left: 62px;
+
+        @media (max-width: 1024px) {
+            order: 0;
+        }
+        
         .breakpoint-large-down({
             flex-basis: 131px;
             margin-left: 0px;
@@ -135,7 +140,7 @@
             border-radius: 0px 0px 8px 8px;
 
             // Disable animation in mobile view
-            @media (max-width: 1000px) {
+            @media (max-width: 1024px) {
                 animation: none;
                 opacity: 1;
                 transform: none;
@@ -411,7 +416,7 @@
                                 opacity: 0.9;
                                 
                                 // Hide on mobile screens
-                                @media (max-width: 1000px) {
+                                @media (max-width: 1024px) {
                                     display: none;
                                 }
                             }
@@ -523,7 +528,7 @@
     display: none;
 }
 
-@media (max-width:1000px) {
+@media (max-width:1024px) {
 
     /* menu toggle effect mobile */
 
@@ -1209,7 +1214,7 @@
 // Preserve mobile menu functionality
 #menuToggle {
     display: none;
-    @media (max-width: 1000px) {
+    @media (max-width: 1024px) {
         display: flex;
     }
 }
@@ -1220,7 +1225,7 @@
 }
 
 // Highlight active menu item (NEWS & EVENTS in the screenshot)
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
     #menu li.active > a, 
     #menu li.selected > a {
         color: #EFD516 !important;

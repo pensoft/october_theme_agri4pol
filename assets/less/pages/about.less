@@ -798,3 +798,143 @@
         }
     }
 }
+
+// Tablet-only adjustments (between large mobile and desktop)
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding-top: 0;
+    }
+    #background .background-content p,
+    #mission .mission-content p,
+    #objectives .objective-text p {
+      font-size: 17px;
+      line-height: 1.7;
+    }
+  
+    /* Work Packages */
+    #work-packages .wp-title h3 {
+      font-size: 22px;
+    }
+    #work-packages .wp-content {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+  
+    /* About page menu */
+    .about-menu-item {
+      font-size: 15px;
+    }
+    #background {
+        .section-label {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+
+            h2 {
+                position: static !important;
+                transform: none !important;
+                font-size: 40px !important;
+                text-align: center !important;
+                white-space: pre-wrap;
+                color: #969696 !important;
+                margin: 0 0 15px 0;
+            }
+        }
+
+        .background-row {
+            flex-direction: column;
+            justify-content: start;
+        }
+
+        .background-image {
+            margin-top: 30px;
+            text-align: center;
+
+            .image-placeholder {
+                height: 200px;
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 868px) {
+    .wp-container{
+        display: flex;
+        justify-content: center;
+    }
+    .header-bg {
+        width: 100% !important;
+    }
+
+    #background {
+        .background-row {
+            display: block;
+        }
+        .background-image img {
+            object-fit: contain;
+        }
+    }
+
+    // Ensure objectives order matches mobile/tablet-down layout
+    #objectives {
+        .objective-item {
+            flex-direction: column;
+            margin-bottom: 40px;
+            align-items: center !important;
+
+            .objective-number {
+                order: 1;
+                margin: 15px 0;
+                text-align: center;
+                width: 100%;
+
+                .number-circle {
+                    font-size: 28px;
+                    margin: 0 auto;
+                }
+            }
+
+            .objective-image {
+                order: 2;
+                margin-bottom: 15px;
+                text-align: center;
+                width: 100%;
+
+                img {
+                    margin: 0 auto;
+                }
+            }
+
+            .objective-text {
+                order: 3;
+                text-align: center;
+                width: 100%;
+
+                p {
+                    font-size: 16px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    // Use mobile layout for work packages and center boxes on small tablets
+    #work-packages {
+        padding: 40px 0;
+
+        .work-packages-container {
+            display: none !important;
+        }
+
+        .work-packages-mobile {
+            display: block !important;
+
+            .work-package-box {
+                max-width: 520px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 40px;
+            }
+        }
+    }
+}

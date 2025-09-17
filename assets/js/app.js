@@ -127,7 +127,7 @@ $(document).ready(function() {
         }
     }
 
-    if (width < 992) { // mobile
+    if (width <= 1024) { // mobile
         $('#menuToggle input[type="checkbox"]').change(function(){
             var checked = $(this).is(":checked");
             if(checked){
@@ -181,7 +181,7 @@ $(document).ready(function() {
         // Only for mobile: clicking a parent with submenu toggles its dropdown-menu
         $(document).on('click', '#menu .dropdown > a', function(e) {
             // Only act if in mobile
-            if (window.innerWidth >= 992) return;
+            if (window.innerWidth > 1024) return;
             var $parent = $(this).parent('.dropdown');
             var $submenu = $parent.children('.dropdown-menu');
             if ($submenu.length) {
@@ -368,7 +368,7 @@ function redirectAndRefresh(url){
 }
 
 function isBreakpointLarge() {
-    return window.innerWidth <= 991;
+    return window.innerWidth <= 1024;
 }
 
 
@@ -533,7 +533,7 @@ function initWorkPackagesToggle() {
  * Handle mobile/desktop layout switching for work packages
  */
 function initWorkPackagesLayout() {
-    var isMobile = window.innerWidth <= 768;
+    var isMobile = window.innerWidth <= 868;
     var $mobileLayout = $('.work-packages-mobile');
     var $desktopLayout = $('.work-packages-container');
     
@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Always rebuild the mobile menu social icons on page load
-    if (width < 992) {
+    if (width <= 1024) {
         // First ensure the search field container exists
         if ($('#menuToggle #menu .search_field').length === 0) {
             $('#menuToggle #menu').append('<li class="nav-item search_field"><div class="icon-container"></div></li>');
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Handle mobile submenu visibility
 function initMobileMenu() {
     // If we're in mobile view
-    if (width < 992) {
+    if (width <= 1024) {
         // Make sure dropdown menus are properly set up
         $('#menu .dropdown-menu').each(function() {
             $(this).css('display', 'none');
@@ -610,7 +610,7 @@ $(window).resize(function() {
     // Update width variable
     width = window.innerWidth;
     
-    if (width < 992) {
+    if (width <= 1024) {
         initMobileMenu();
     }
     
