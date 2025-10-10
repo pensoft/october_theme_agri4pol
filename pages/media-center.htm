@@ -116,18 +116,30 @@ return Response::download($pathToFile, $fileName, $headers);
                         <span class="card_image_container" style="background: url({{record.flyer_image.thumb(321,217,{'mode':'crop'})}}) center center no-repeat;" title="{{record.name}}"></span>
                         <span class="card_title" style="min-height: 100px;">{{record.name}}</span>
                     </div>
-                    {% if record.file %}
                     <div class="col-xs-12">
                         <div class="text-center">
-
-                            {{form_open({ request: 'onDownloadFile' }) }}
-                            <input type="hidden" value="{{record.file.id}}" name="id">
-                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> Download</button>
-                            {{ form_close() }}
-
+                            {% if record.file_lang_versions and record.file_lang_versions.count() %}
+                                {% for langFile in record.file_lang_versions %}
+                                    {{form_open({ request: 'onDownloadFile' }) }}
+                                    <input type="hidden" value="{{langFile.id}}" name="id">
+                                    <button type="submit" class="btn btn-primary dwn-button" data-attach-loading>
+                                        <i class="pr p-download"></i>
+                                        {% if langFile.title %}
+                                            {{ langFile.title }}
+                                        {% else %}
+                                            Download {{ langFile.file_name|slice(0, 20) }}
+                                        {% endif %}
+                                    </button>
+                                    {{ form_close() }}
+                                {% endfor %}
+                            {% elseif record.file %}
+                                {{form_open({ request: 'onDownloadFile' }) }}
+                                <input type="hidden" value="{{record.file.id}}" name="id">
+                                <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> Download</button>
+                                {{ form_close() }}
+                            {% endif %}
                         </div>
                     </div>
-                    {% endif %}
                 </div>
             </div>
             {% endif %}
