@@ -1,0 +1,57 @@
+url = "/advisory-board"
+layout = "default"
+title = "Advisory Board"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+==
+<?php
+use Pensoft\Cardprofiles\Models\Category;
+
+function onStart(){
+    $category = Category::where('slug', 'advisory-board')->first();
+    $this['profiles'] = $category
+        ? $category->profiles()->orderBy('sort_order', 'asc')->get()
+        : collect([]);
+    $this['categoryName'] = $category ? $category->name : 'Advisory Board';
+}
+?>
+==
+
+<div class="container-fluid menu-container">
+    <div class="header-bg">
+        <h1>{{ categoryName }}</h1>
+    </div>
+</div>
+
+<section class="container advisory-board-section">
+    <div class="row advisory-board-grid">
+        {% for profile in profiles %}
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="advisory-board-card">
+                <div class="advisory-board-card__avatar">
+                    {% if profile.avatar %}
+                        <img src="{{ profile.avatar.path }}" alt="{{ profile.names }}">
+                    {% else %}
+                        <img src="{{ 'profile.svg'|media }}" alt="{{ profile.names }}">
+                    {% endif %}
+                </div>
+                <div class="advisory-board-card__info">
+                    <h3 class="advisory-board-card__name">{{ profile.names }}</h3>
+                    {% if profile.position %}
+                        <p class="advisory-board-card__position">{{ profile.position }}</p>
+                    {% endif %}
+                    {% if profile.content %}
+                        <div class="advisory-board-card__description">{{ profile.content|raw }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-xs-12">
+            <p>No advisory board members found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
