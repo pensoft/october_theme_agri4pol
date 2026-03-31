@@ -353,6 +353,9 @@ $(document).ready(function() {
     
     // Initialize gallery lightbox functionality
     initGalleryLightbox();
+
+    // Initialize advisory board read more/less toggle
+    initAdvisoryBoardReadMore();
 });
 
 function goToPage(url){
@@ -546,6 +549,42 @@ function initWorkPackagesLayout() {
         $mobileLayout.hide();
         $desktopLayout.show();
     }
+}
+
+/**
+ * Advisory Board - Read more/less toggle for member descriptions
+ */
+function initAdvisoryBoardReadMore() {
+    var collapsedHeight = 100;
+
+    $('.advisory-board-card__description').each(function() {
+        var $desc = $(this);
+        var $inner = $desc.find('.advisory-board-card__description-inner');
+        var $toggle = $desc.siblings('.advisory-board-card__read-more');
+        var fullHeight = $inner.outerHeight();
+
+        if (fullHeight <= collapsedHeight) {
+            $toggle.hide();
+        } else {
+            $desc.addClass('is-collapsed');
+        }
+    });
+
+    $('.advisory-board-card__read-more').on('click', function() {
+        var $toggle = $(this);
+        var $desc = $toggle.siblings('.advisory-board-card__description');
+        var $inner = $desc.find('.advisory-board-card__description-inner');
+
+        if ($desc.hasClass('is-collapsed')) {
+            $desc.css('max-height', $inner.outerHeight() + 'px');
+            $desc.removeClass('is-collapsed').addClass('is-expanded');
+            $toggle.text('Show less');
+        } else {
+            $desc.css('max-height', '');
+            $desc.removeClass('is-expanded').addClass('is-collapsed');
+            $toggle.text('Read more');
+        }
+    });
 }
 
 init()
