@@ -43,7 +43,10 @@ function onStart(){
                         <p class="advisory-board-card__position">{{ profile.position }}</p>
                     {% endif %}
                     {% if profile.content %}
-                        <div class="advisory-board-card__description">{{ profile.content|raw }}</div>
+                        <div class="advisory-board-card__description">
+                            <div class="advisory-board-card__description-inner">{{ profile.content|raw }}</div>
+                        </div>
+                        <a href="javascript:;" class="advisory-board-card__read-more">Read more</a>
                     {% endif %}
                 </div>
             </div>
