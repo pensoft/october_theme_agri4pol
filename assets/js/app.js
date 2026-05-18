@@ -290,6 +290,12 @@ $(document).ready(function() {
                 scrollTop: $content.offset().top - $('header').height()
             }, speed);
 
+            // Reset nested video category filter whenever Videos becomes active
+            if (this.hash === '#videos') {
+                var resetVideoTabs = $('#videos').data('resetVideoTabs');
+                if (typeof resetVideoTabs === 'function') resetVideoTabs();
+            }
+
             // Prevent the anchor\'s default click action
             e.preventDefault();
         });
@@ -356,6 +362,9 @@ $(document).ready(function() {
 
     // Initialize advisory board read more/less toggle
     initAdvisoryBoardReadMore();
+
+    // Initialize video category tabs
+    initVideoCategoryTabs();
 });
 
 function goToPage(url){
@@ -584,6 +593,41 @@ function initAdvisoryBoardReadMore() {
             $desc.removeClass('is-expanded').addClass('is-collapsed');
             $toggle.text('Read more');
         }
+    });
+}
+
+/**
+ * Media Center - filter video cards by category tab.
+ * Scoped to #videos; idempotent (namespaced event); exposes a reset hook
+ * via $('#videos').data('resetVideoTabs') for the outer .media_tabs handler.
+ */
+function initVideoCategoryTabs() {
+    var $wrap = $('#videos');
+    var $tabs = $wrap.find('.video_category_tabs');
+    if (!$tabs.length) return;
+
+    function applyFilter(category) {
+        var $cards = $wrap.find('.video-card');
+        if (category === 'all') {
+            $cards.show();
+        } else {
+            $cards.hide().filter('[data-category-id="' + category + '"]').show();
+        }
+    }
+
+    $tabs.off('click.vct').on('click.vct', '.video_tab', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $btn = $(this);
+        $btn.siblings('.video_tab').removeClass('is-active');
+        $btn.addClass('is-active');
+        applyFilter(String($btn.data('category')));
+    });
+
+    $wrap.data('resetVideoTabs', function() {
+        $tabs.find('.video_tab').removeClass('is-active')
+             .filter('[data-category="all"]').addClass('is-active');
+        applyFilter('all');
     });
 }
 

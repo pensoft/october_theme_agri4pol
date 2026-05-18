@@ -13,6 +13,7 @@ use Pensoft\Media\Models\MediaLogos;
 use Pensoft\Media\Models\Flyers;
 use Pensoft\Media\Models\Presentations;
 use Pensoft\Media\Models\Videos;
+use Pensoft\Media\Models\VideosCategory;
 use Pensoft\Media\Models\Galleries;
 use Pensoft\Media\Models\Documents;
 use System\Models\File;
@@ -21,7 +22,8 @@ function onStart(){
 	$this['logos'] =  MediaLogos::get();
 	$this['flyers'] =  Flyers::get();
 	$this['presentations'] =  Presentations::get();
-	$this['videos'] =  Videos::get();
+	$this['videos'] =  Videos::with('category')->get();
+	$this['videoCategories'] = VideosCategory::orderBy('sort_order')->get();
 	$this['images'] =  Galleries::get();
 	$this['documents'] =  Documents::get();
 }
@@ -154,8 +156,16 @@ return Response::download($pathToFile, $fileName, $headers);
 
         {% if videos.count() %}
         <div class="row card-container-row center-xs-down" id="videos" style="display: none;">
+            {% if videoCategories.count() %}
+            <div class="col-xs-12 video_category_tabs" role="tablist">
+                <button type="button" class="video_tab is-active" data-category="all">All Videos</button>
+                {% for category in videoCategories %}
+                <button type="button" class="video_tab" data-category="{{ category.id }}">{{ category.name }}</button>
+                {% endfor %}
+            </div>
+            {% endif %}
             {% for record in videos %}
-            <div class="col-md-6 col-xs-12 mb-4">
+            <div class="col-md-6 col-xs-12 mb-4 video-card" data-category-id="{{ record.category_id ?: '' }}">
                 <div class="videos_container">
                     <div class="text-center">
                         {% if record.file %}
@@ -176,15 +186,13 @@ return Response::download($pathToFile, $fileName, $headers);
                             </iframe>
                         {% endif %}
                     </div>
-                    <div class="col-xs-12">
-                        <p class="card_title">{{record.name}}</p>
-                    </div>
+                    <p class="card_title">{{record.name}}</p>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% endif %}
-        
+
         {% if images.count() %}
         <div class="row card-container-row center-xs-down" id="images" style="display: none;">
             {% for record in images %}
