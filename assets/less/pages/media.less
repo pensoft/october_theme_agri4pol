@@ -57,6 +57,38 @@
     min-width: 93%;
 }
 
+// Videos row in Media Center — provide a real horizontal gutter between cards
+// (flexboxgrid's default .col-md-6 padding is only 8px, and the beige
+// .videos_container fills its column edge-to-edge so cards visually touch).
+#videos.row {
+    margin-left: -12px;
+    margin-right: -12px;
+
+    > .video-card {
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-bottom: 56px; // vertical gap between video rows
+    }
+}
+
+// Override the shared min-content cap for video cards specifically.
+// Iframes/videos have no intrinsic min-content, so the shared rule
+// collapses them to ~0; we want videos_container to fill its column.
+.video-card .videos_container {
+    max-width: 100%;
+    min-width: 0;
+
+    iframe,
+    video {
+        display: block;
+        width: 100%;
+    }
+
+    .card_title {
+        margin-bottom: 0;
+    }
+}
+
 .media-center,
 .newsletters{
     .card_image_container{
@@ -77,7 +109,6 @@
     }
 
     .card-container-row{
-        margin-top: 100px!important;
         margin-bottom: 100px!important;
     }
 }
@@ -180,5 +211,43 @@
 .flyer-container{
     .dwn-button{
         padding: 0 !important;
+    }
+}
+
+.video_category_tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0 0 24px;
+    padding: 0 12px;  // align tabs with .video-card column padding (overrides .col-xs-12 8px)
+    font-family: 'Montserrat' !important;
+
+    .breakpoint-large-down({
+        justify-content: center;
+    });
+
+    .video_tab {
+        font-family: 'Montserrat' !important;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        padding: 4px 0;
+        border: 0;
+        background: transparent;
+        color: #9a9a9a;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.6;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &.is-active {
+            opacity: 0.6;
+        }
     }
 }
