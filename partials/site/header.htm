@@ -41,6 +41,11 @@ numberOfLevels = 2
                 <a href="{{ youtube_url }}" class="pr middle social-btn btn-youtube" aria-label="YouTube" target="_blank"></a>
             </li>
             {% endif %}
+            {% if enable_instagram and instagram_url %}
+            <li class="nav-item social">
+                <a href="{{ instagram_url }}" class="pr middle social-btn btn-instagram" aria-label="Instagram" target="_blank"></a>
+            </li>
+            {% endif %}
             <li class="nav-item social">
                 <a class="pr middle search-btn" onclick="showSearchForm();" aria-label="Search"></a>
             </li>
