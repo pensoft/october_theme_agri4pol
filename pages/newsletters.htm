@@ -63,6 +63,8 @@ return Redirect::to('/media-center/newsletters');
     </div>
 </div>
 
+{% partial 'subscribe-section' %}
+
 {% if records.count %}
 <div class="container">
     <div class="row newsletter_container start-md around-xs">
@@ -97,5 +99,3 @@ return Redirect::to('/media-center/newsletters');
     {% component 'jumbotron' %}
 </div>
 {% endif %}
-
-{% partial 'subscribe-section' %}
