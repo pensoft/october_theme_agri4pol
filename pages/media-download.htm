@@ -1,0 +1,39 @@
+title = "Download"
+url = "/media-center/download/:id|^[0-9]+$/:name?"
+is_hidden = 0
+robot_index = "noindex"
+robot_follow = "nofollow"
+==
+<?php
+use System\Models\File;
+
+/**
+ * Serves a media file attachment over a plain GET URL, so downloads can be
+ * triggered by a normal <a href> link instead of a POST form.
+ *
+ * The :name segment is cosmetic — it carries the original file name (and its
+ * extension) into the URL so Matomo records a meaningful download entry.
+ * The file itself is always resolved from :id.
+ */
+function onStart()
+{
+	$file = File::find((int) $this->param('id'));
+
+	// Only public attachments are downloadable here; protected files
+	// (internal documents etc.) keep their own guarded handlers.
+	if (!$file || !$file->is_public) {
+		return Redirect::to('/media-center');
+	}
+
+	$pathToFile = $file->getLocalPath();
+
+	if (!file_exists($pathToFile)) {
+		return Redirect::to('/media-center');
+	}
+
+	return Response::download($pathToFile, $file->file_name, [
+		'Content-Type' => $file->content_type,
+	]);
+}
+?>
+==

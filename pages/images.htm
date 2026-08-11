@@ -15,7 +15,6 @@ description_limit = 0
 <?php
 use Pensoft\Media\Models\Galleries;
 use Pensoft\Media\Models\Graphic;
-use System\Models\File;
 
 function onStart(){
 	$gallery_id = $this->param('id');
@@ -26,46 +25,6 @@ function onStart(){
 	if (!$this['gallery']) {
 		return Redirect::to('/media-center#images');
 	}
-
-if(get('download')){
-$file = File::find((int)get('download'));
-$file_name = $file->getLocalPath();
-$recordName = get('file_name') ? get('file_name') : 'AGRI4POL_image';
-$ext= $file->getExtension();
-
-if (file_exists($file_name)) {
-header('Content-Description: File Transfer');
-header('Content-Type: application/octet-stream');
-header("Content-Type: application/force-download");
-header('Content-Disposition: attachment; filename='.$recordName .'.'. $ext);
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-header('Content-Length: ' . filesize($file_name));
-ob_clean();
-flush();
-readfile($file_name);
-exit();
-}
-return Redirect::to('/media-center#images');
-}
-}
-
-
-function onDownloadFile(){
-$file = File::find(post('id'));
-$pathToFile = $file->getLocalPath();
-$fileName = $file->file_name;
-$fileType = $file->content_type;
-$headers = [
-'HTTP/1.1 200 OK',
-'Pragma: public',
-'Content-Type: '.$fileType,
-'Content-Type: application/force-download'
-];
-
-return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==

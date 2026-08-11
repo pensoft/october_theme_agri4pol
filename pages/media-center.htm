@@ -16,7 +16,6 @@ use Pensoft\Media\Models\Videos;
 use Pensoft\Media\Models\VideosCategory;
 use Pensoft\Media\Models\Galleries;
 use Pensoft\Media\Models\Documents;
-use System\Models\File;
 
 function onStart(){
 	$this['logos'] =  MediaLogos::get();
@@ -26,22 +25,6 @@ function onStart(){
 	$this['videoCategories'] = VideosCategory::orderBy('sort_order')->get();
 	$this['images'] =  Galleries::get();
 	$this['documents'] =  Documents::get();
-}
-
-
-function onDownloadFile(){
-	$file = File::find(post('id'));
-	$pathToFile = $file->getLocalPath();
-$fileName = $file->file_name;
-$fileType = $file->content_type;
-$headers = [
-'HTTP/1.1 200 OK',
-'Pragma: public',
-'Content-Type: '.$fileType,
-'Content-Type: application/force-download'
-];
-
-return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
@@ -72,29 +55,10 @@ return Response::download($pathToFile, $fileName, $headers);
                         <span class="card_title" style="min-height: 100px;">{{record.name}}</span>
                     </div>
                     <div class="col-xs-12">
-                            {% if record.file_jpg %}
-                            {{form_open({ request: 'onDownloadFile' }) }}
-                            <input type="hidden" value="{{record.file_jpg.id}}" name="id">
-                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> JPG</button>
-                            {{ form_close() }}
-
-                            {% endif %}
-                            {% if record.file_png %}
-                            {{form_open({ request: 'onDownloadFile' }) }}
-                            <input type="hidden" value="{{record.file_png.id}}" name="id">
-                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> PNG</button>
-                            {{ form_close() }}
-                            {% endif %}
-                            {% if record.file_eps %}
-                            {{form_open({ request: 'onDownloadFile' }) }}
-                            <input type="hidden" value="{{record.file_eps.id}}" name="id">
-                            <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> SVG</button>
-                            {{ form_close() }}
-                            {% endif %}
-
-                            {% if record.file_pdf %}
-                            <a href="{{record.file_pdf.path}}" target="_blank" class="btn btn-primary"><i class="pr p-download"></i> PDF</a>
-                            {% endif %}
+                            {% partial 'site/download-link' file=record.file_jpg label='JPG' icon=true %}
+                            {% partial 'site/download-link' file=record.file_png label='PNG' icon=true %}
+                            {% partial 'site/download-link' file=record.file_eps label='SVG' icon=true %}
+                            {% partial 'site/download-link' file=record.file_pdf label='PDF' icon=true %}
                     </div>
                 </div>
             </div>
@@ -122,23 +86,14 @@ return Response::download($pathToFile, $fileName, $headers);
                         <div class="text-center">
                             {% if record.file_lang_versions and record.file_lang_versions.count() %}
                                 {% for langFile in record.file_lang_versions %}
-                                    {{form_open({ request: 'onDownloadFile' }) }}
-                                    <input type="hidden" value="{{langFile.id}}" name="id">
-                                    <button type="submit" class="btn btn-primary dwn-button" data-attach-loading>
-                                        <i class="pr p-download"></i>
-                                        {% if langFile.title %}
-                                            {{ langFile.title }}
-                                        {% else %}
-                                            Download {{ langFile.file_name|slice(0, 20) }}
-                                        {% endif %}
-                                    </button>
-                                    {{ form_close() }}
+                                    {% partial 'site/download-link'
+                                        file=langFile
+                                        class='btn btn-primary dwn-button'
+                                        icon=true
+                                        label=(langFile.title ?: 'Download ' ~ langFile.file_name|slice(0, 20)) %}
                                 {% endfor %}
                             {% elseif record.file %}
-                                {{form_open({ request: 'onDownloadFile' }) }}
-                                <input type="hidden" value="{{record.file.id}}" name="id">
-                                <button type="submit" class="btn btn-primary" data-attach-loading><i class="pr p-download"></i> Download</button>
-                                {{ form_close() }}
+                                {% partial 'site/download-link' file=record.file label='Download' icon=true %}
                             {% endif %}
                         </div>
                     </div>
@@ -170,10 +125,7 @@ return Response::download($pathToFile, $fileName, $headers);
                     <div class="text-center">
                         {% if record.file %}
                             <video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
-                            {{form_open({ request: 'onDownloadFile' }) }}
-                            <input type="hidden" value="{{record.file.id}}" name="id">
-                            <button type="submit" class="btn btn-primary" data-attach-loading>Download</button>
-                            {{ form_close() }}
+                            {% partial 'site/download-link' file=record.file label='Download' %}
                         {% endif %}
 
                         {% if record.youtube_url %}

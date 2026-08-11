@@ -24,49 +24,9 @@ description_limit = 0
 ==
 <?php
 use Pensoft\Media\Models\Videos;
-use System\Models\File;
 
 function onStart(){
 	$this['mediaVideosList'] =  Videos::where('pensoft_media_videos.parent_id', null)->get();
-if(get('download')){
-$file = File::find((int)get('download'));
-$file_name = $file->getLocalPath();
-$recordName = get('file_name') ? get('file_name') : 'OBSGESSION_video';
-$ext= $file->getExtension();
-
-if (file_exists($file_name)) {
-header('Content-Description: File Transfer');
-header('Content-Type: application/octet-stream');
-header("Content-Type: application/force-download");
-header('Content-Disposition: attachment; filename='.$recordName .'.'. $ext);
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-header('Content-Length: ' . filesize($file_name));
-ob_clean();
-flush();
-readfile($file_name);
-exit();
-}
-return Redirect::to('/videos');
-}
-}
-
-
-function onDownloadFile(){
-$file = File::find(post('id'));
-$pathToFile = $file->getLocalPath();
-$fileName = $file->file_name;
-$fileType = $file->content_type;
-$headers = [
-'HTTP/1.1 200 OK',
-'Pragma: public',
-'Content-Type: '.$fileType,
-'Content-Type: application/force-download'
-];
-
-return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
@@ -100,7 +60,7 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="button_su">
                     <!--<video controls="" width="100%" height="267"><source src="{{record.file.path}}" type="video/mp4"></video>-->
                     <span class="su_button_circle desplode-circle"></span>
-                    <a class="button_su_inner" href="{{ ''| page }}?{{queries}}&download={{record.file.id}}&file_name={{record.name|replace({' ': '_'})}}"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
+                    {% partial 'site/download-link' file=record.file class='button_su_inner' label='<span class="button_text_container"><i class="pr normal p-download"></i>Download</span>' %}
                 </div>
             </div>
             {% endif %}

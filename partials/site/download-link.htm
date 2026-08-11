@@ -1,0 +1,20 @@
+description = "Download link for a file attachment (GET link so Matomo tracks it)"
+==
+{#
+	Renders a file attachment as a plain <a> download link pointing at the
+	media-download page, instead of a POST form. Matomo only tracks clicks on
+	links, so this is what makes downloads show up in the Downloads report;
+	the matomo_download / piwik_download classes force the click to be counted
+	as a download even for extensions outside Matomo's default list (.eps, .svg).
+
+	Variables:
+	  file  — the File attachment (required)
+	  label — button text (default "Download")
+	  class — CSS classes for the link (default "btn btn-primary")
+	  icon  — set to true to prepend the download icon
+#}
+{% if file %}
+<a href="{{ 'media-download'|page({ id: file.id, name: file.file_name|url_encode }) }}"
+   class="{{ class|default('btn btn-primary') }} matomo_download piwik_download"
+   title="Download {{ file.file_name|escape }}">{% if icon|default(false) %}<i class="pr p-download"></i> {% endif %}{{ label|default('Download')|raw }}</a>
+{% endif %}

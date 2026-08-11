@@ -17,49 +17,9 @@ pageNumber = "{{ :page }}"
 ==
 <?php
 use Pensoft\Media\Models\MediaLogos;
-use System\Models\File;
 
 function onStart(){
 	$this['mediaLogosList'] =  MediaLogos::get();
-	if(get('download')){
-		$file = File::find((int)get('download'));
-		$file_name = $file->getLocalPath();
-
-$ext= $file->getExtension();
-$recordName = get('file_name') ? get('file_name') : 'OBSGESSION_logo.'.$ext;
-
-if (file_exists($file_name)) {
-header('Content-Description: File Transfer');
-header('Content-Type: application/octet-stream');
-header("Content-Type: application/force-download");
-header('Content-Disposition: atntachment; filename='.$recordName);
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-header('Content-Length: ' . filesize($file_name));
-ob_clean();
-flush();
-readfile($file_name);
-exit();
-}
-return Redirect::to('/logo');
-}
-}
-
-function onDownloadFile(){
-$file = File::find(post('id'));
-$pathToFile = $file->getLocalPath();
-$fileName = $file->file_name;
-$fileType = $file->content_type;
-$headers = [
-'HTTP/1.1 200 OK',
-'Pragma: public',
-'Content-Type: '.$fileType,
-'Content-Type: application/force-download'
-];
-
-return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
@@ -91,31 +51,22 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="links">
                     {% if record.file_jpg %}
                     <div class="button_su download">
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file_jpg.id}}" name="id">
                     <span class="su_button_circle desplode-circle"></span>
-                    <button type="submit" data-attach-loading class="btn button_su_inner"><span class="button_text_container">JPG</span></button>
-                    {{ form_close() }}
+                    {% partial 'site/download-link' file=record.file_jpg class='btn button_su_inner' label='<span class="button_text_container">JPG</span>' %}
                     </div>
                     {% endif %}
 
                     {% if record.file_png %}
                     <div class="button_su download">
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file_png.id}}" name="id">
                     <span class="su_button_circle desplode-circle"></span>
-                    <button type="submit" data-attach-loading class="btn button_su_inner"><span class="button_text_container">PNG</span></button>
-                    {{ form_close() }}
+                    {% partial 'site/download-link' file=record.file_png class='btn button_su_inner' label='<span class="button_text_container">PNG</span>' %}
                     </div>
                     {% endif %}
 
                     {% if record.file_eps %}
                     <div class="button_su download">
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file_eps.id}}" name="id">
                     <span class="su_button_circle desplode-circle"></span>
-                    <button type="submit" data-attach-loading class="btn button_su_inner"><span class="button_text_container">SVG</span></button>
-                    {{ form_close() }}
+                    {% partial 'site/download-link' file=record.file_eps class='btn button_su_inner' label='<span class="button_text_container">SVG</span>' %}
                     </div>
                     {% endif %}
                 </div>
