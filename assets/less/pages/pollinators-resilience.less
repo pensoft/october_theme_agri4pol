@@ -1,0 +1,587 @@
+// Pollinators and Resilience (Global Information Product) page
+// Reuses .header-bg / .about-menu from pages/about.less for the page header.
+
+@pr-soft-bg: #F2F6F3;
+@pr-accent-green: #4b7f37;
+@pr-card-radius: 15px;
+@pr-card-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+@pr-card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+.pollinators-resilience {
+    .menu-container {
+        margin-bottom: 24px;
+        .breakpoint-large-down({
+            margin-bottom: 0;
+        });
+    }
+
+    a {
+        overflow-wrap: anywhere;
+    }
+
+    // The theme's .container is a flex row, which sizes each child to its content
+    // (blocks off-centre, accordions widening when opened) — lay sections out as blocks.
+    .pr-section > .container {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    // Keep the four section links on one tidy row on phones
+    .about-menu {
+        .breakpoint-medium-down({
+            box-sizing: border-box;
+            padding: 12px 16px;
+
+            .row {
+                justify-content: center;
+                flex-wrap: wrap;
+                margin: 0;
+            }
+
+            &-item {
+                padding: 6px 10px;
+                margin: 2px;
+            }
+        });
+    }
+}
+
+.pr-section {
+    position: relative;
+    width: 100%;
+}
+
+// Section heading — light, uppercase, like the About section labels
+.pr-heading {
+    margin-bottom: 32px;
+
+    h2 {
+        font-size: 40px;
+        font-weight: 300;
+        color: @light-color;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        line-height: 1.15;
+        margin: 0 0 12px 0;
+        .breakpoint-medium-down({
+            font-size: 28px;
+        });
+    }
+
+    p {
+        max-width: 760px;
+        font-size: 17px;
+        line-height: 1.6;
+        color: #555;
+        margin: 0;
+    }
+
+    &.pr-heading-light {
+        h2 {
+            color: @white-color;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+        p {
+            color: @white-color;
+        }
+    }
+}
+
+// Overview
+.pr-overview {
+    .pr-eyebrow {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: @primary-color;
+        background: @yellow-color;
+        border-radius: 5px;
+        padding: 6px 14px;
+        margin-bottom: 20px;
+    }
+
+    .pr-factsheet {
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: @heading-text-color;
+        margin: 0 0 24px 0;
+        .breakpoint-medium-down({
+            font-size: 24px;
+        });
+    }
+
+    .pr-lead {
+        font-size: 18px;
+        line-height: 1.6;
+        color: @primary-color;
+        margin: 0;
+    }
+
+    // Same 2fr / 1fr grid and gap as .pr-credits, so the cover matches the
+    // Project & partners card width and the text matches the Contributors card
+    .pr-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        gap: 30px;
+        align-items: center;
+
+        .breakpoint-large-down({
+            grid-template-columns: minmax(0, 1fr);
+        });
+    }
+
+    .pr-intro-text {
+        padding-right: 40px;
+        .breakpoint-large-down({
+            padding-right: 0;
+        });
+    }
+
+    .pr-illustration {
+        display: flex;
+        justify-content: flex-end; // right edge lines up with the Project & partners card
+        position: relative;
+
+        .pr-factsheet-cover {
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+
+            &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .breakpoint-large-down({
+            justify-content: center;
+            .pr-factsheet-cover {
+                max-width: 340px;
+            }
+        });
+        .breakpoint-medium-down({
+            .pr-factsheet-cover {
+                max-width: 260px;
+            }
+        });
+    }
+
+    .pr-credits {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        gap: 30px;
+        margin-top: 48px;
+
+        .breakpoint-large-down({
+            grid-template-columns: minmax(0, 1fr);
+            gap: 20px;
+        });
+    }
+
+    .pr-contributors {
+        .pr-card-body {
+            justify-content: flex-start; // names follow the title directly
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+    }
+}
+
+// Title pinned to the top, body centred in the remaining height
+.pr-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: @pr-soft-bg;
+    border-radius: @pr-card-radius;
+    padding: 32px 36px;
+
+    .breakpoint-medium-down({
+        padding: 24px 22px;
+    });
+
+    h3 {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: @pr-accent-green;
+        margin: 0 0 14px 0;
+    }
+
+    p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: #555;
+        margin: 0;
+    }
+
+    .pr-card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.pr-card .pr-partner-list {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 0 20px 0 !important;
+
+    li {
+        display: flex;
+        align-items: center;
+        min-height: 76px;
+        margin: 0;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(75, 127, 55, 0.15);
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-height: 56px;
+            max-width: 170px;
+            mix-blend-mode: multiply; // drop white logo backgrounds onto the card colour
+        }
+    }
+
+    .pr-partner-name {
+        font-size: 22px;
+        font-weight: 700;
+        color: @primary-color;
+        letter-spacing: 2px;
+    }
+}
+
+.pr-card .pr-contact {
+    font-size: 14px;
+
+    a {
+        color: @link-color;
+        font-weight: 600;
+    }
+}
+
+// Definitions — white cards on the work-packages background
+.pr-definitions {
+    padding: 30px 0;
+    background: url("../../assets/images/WP-background.jpg") center no-repeat;
+    background-size: cover;
+}
+
+.pr-definition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+
+    .breakpoint-medium-down({
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    });
+}
+
+.pr-definition {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: @white-color;
+    border-radius: @pr-card-radius;
+    padding: 36px 40px;
+    box-shadow: @pr-card-shadow;
+    transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+
+    .breakpoint-medium-down({
+        padding: 26px 22px;
+    });
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: @pr-card-shadow-hover;
+    }
+
+    header {
+        margin-bottom: 18px;
+    }
+
+    .pr-acronym {
+        display: block;
+        font-size: 28px;
+        font-weight: 700;
+        color: @pr-accent-green;
+        line-height: 1.1;
+        margin-bottom: 6px;
+    }
+
+    .pr-org {
+        display: block;
+        font-size: 14px;
+        color: @light-color;
+        line-height: 1.4;
+    }
+
+    blockquote {
+        margin: 0 0 24px 0;
+        padding: 0 0 0 18px;
+        border-left: 4px solid @yellow-color;
+        font-size: 16px;
+        line-height: 1.65;
+        color: @primary-color;
+    }
+
+    .pr-source {
+        margin: auto 0 0 0;
+        padding-top: 16px;
+        border-top: 1px solid #e5e9e3;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #555;
+
+        span {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: @pr-accent-green;
+            margin-right: 6px;
+        }
+
+        a {
+            color: @link-color;
+        }
+    }
+}
+
+// Reference lists
+.pollinators-resilience .pr-ref-list {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    li {
+        margin: 0;
+        position: relative;
+        padding: 14px 0 14px 26px;
+        font-size: 15px;
+        line-height: 1.65;
+        color: #555;
+        border-bottom: 1px solid #e5e9e3;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 21px;
+            width: 11px;
+            height: 10px;
+            background: url("../../assets/images/readmore-arrow.svg") no-repeat center;
+            background-size: contain;
+        }
+    }
+
+    a {
+        color: @link-color;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &.pr-ref-list-cards {
+        background: @white-color;
+        border-radius: @pr-card-radius;
+        box-shadow: @pr-card-shadow;
+        padding: 10px 30px !important;
+    }
+}
+
+.pr-resources {
+    .pr-heading h2 {
+        font-size: 30px;
+        .breakpoint-medium-down({
+            font-size: 24px;
+        });
+    }
+
+    .row > div {
+        margin-bottom: 20px;
+    }
+}
+
+// Literature — collapsible topics
+.pr-literature {
+    background: @pr-soft-bg;
+
+    .pr-lit-group {
+        margin-bottom: 56px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.pr-topic {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background: @white-color;
+    border-radius: @pr-card-radius;
+    box-shadow: @pr-card-shadow;
+    margin-bottom: 16px;
+    transition: box-shadow 0.3s ease;
+
+    &:hover,
+    &[open] {
+        box-shadow: @pr-card-shadow-hover;
+    }
+
+    summary {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 22px 30px;
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:after {
+            content: '';
+            flex: 0 0 25px;
+            width: 25px;
+            height: 25px;
+            background: url("../../assets/images/pluc-icon.svg") no-repeat center;
+            background-size: contain;
+            transition: transform 0.3s ease;
+        }
+
+        &:focus-visible {
+            outline: 2px solid @green-color;
+            outline-offset: 2px;
+            border-radius: @pr-card-radius;
+        }
+
+        .breakpoint-medium-down({
+            padding: 18px 20px;
+            flex-wrap: wrap;
+        });
+    }
+
+    &[open] summary:after {
+        background-image: url("../../assets/images/minus-icon.svg");
+    }
+
+    .pr-topic-title {
+        flex: 1;
+        font-size: 18px;
+        font-weight: 600;
+        color: @primary-color;
+        line-height: 1.4;
+    }
+
+    .pr-topic-count {
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: @pr-accent-green;
+        background: @pr-soft-bg;
+        border-radius: 20px;
+        padding: 4px 12px;
+    }
+
+    .pr-topic-body {
+        padding: 0 30px 16px 30px;
+        border-top: 1px solid #e5e9e3;
+        .breakpoint-medium-down({
+            padding: 0 20px 12px 20px;
+        });
+    }
+
+    .pr-topic-note {
+        margin: 18px 0 4px 0;
+        padding: 14px 18px;
+        background: @pr-soft-bg;
+        border-left: 4px solid @yellow-color;
+        border-radius: 0 8px 8px 0;
+        font-size: 15px;
+        line-height: 1.6;
+        color: @primary-color;
+    }
+}
+
+// Closing call to action
+.pr-cta {
+    .pr-cta-box {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        padding: 40px 48px;
+        border-radius: @pr-card-radius;
+        background: url('../../assets/images/banner-cover.png') left center no-repeat;
+        background-size: cover;
+        box-shadow: @pr-card-shadow;
+
+        h2 {
+            color: @white-color;
+            font-size: 30px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        p {
+            color: @white-color;
+            font-size: 16px;
+            margin: 0;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            flex-shrink: 0;
+        }
+
+        .breakpoint-medium-down({
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 30px 24px;
+        });
+    }
+}

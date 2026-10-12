@@ -385,6 +385,10 @@
     width: 67px;
     background: white url(../../assets/images/icon-search-library.svg) center no-repeat;
     background-size: 22px;
+    // Icon-only button: keep any injected text (e.g. accessibility widgets) from rendering over the icon
+    font-size: 0;
+    color: transparent;
+    overflow: hidden;
 }
 
 #clearBtn {

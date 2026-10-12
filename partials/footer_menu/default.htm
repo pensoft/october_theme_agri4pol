@@ -1,0 +1,33 @@
+{#
+    Theme override of the BenFreke MenuManager "menu" template for the footer_menu alias only
+    (partials/site/footer.htm). Same markup as the plugin (footer uses numberOfLevels = 1),
+    plus a fixed "Accessibility Policy" item at the end. The fixed item is skipped if the
+    backend menu already links to the page, so it never shows twice.
+#}
+{% set accessibilityUrl = 'accessibility-policy'|page %}
+{% set hasAccessibilityItem = false %}
+
+{% if parentNode and parentNode.getChildCount %}
+<ul class="{{ primaryClasses }}">
+    {% for primaryNav in parentNode.getChildren %}
+        {% if primaryNav.enabled %}
+            {% if 'accessibility-policy' in primaryNav.getLinkHref %}
+                {% set hasAccessibilityItem = true %}
+            {% endif %}
+            <li class="{{ listItemClasses }} {{ primaryNav.getListItemClasses(activeLeft, activeRight) }}">
+                <a href="{{ primaryNav.getLinkHref }}" target="{{ primaryNav.getLinkTarget }}">
+                    {{ primaryNav.title }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+
+    {% if not hasAccessibilityItem %}
+    <li class="{{ listItemClasses }}{{ this.page.id == 'accessibility-policy' ? ' active' }}">
+        <a href="{{ accessibilityUrl }}">
+            Accessibility Policy
+        </a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}

@@ -1,0 +1,377 @@
+url = "/pollinators-and-resilience"
+layout = "default"
+title = "Pollinators and Resilience"
+is_hidden = 0
+meta_description = "AGRI4POL Global Information Product 1: accompanying information for the fact sheet Pollinator Contributions to Resilience: definitions of resilience, additional resources and underpinning literature."
+seo_keywords = "pollinators, resilience, pollination, ecosystem services, agri-food systems, livelihoods, AGRI4POL"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+==
+<?php
+function onStart(){
+    // Escape a citation and turn its URLs into links (trailing punctuation stays outside the link).
+    $linkify = function($text){
+        $text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+        return preg_replace(
+            '~(https?://[^\s<]+?)([.,;)]?)(?=\s|$)~',
+            '<a href="$1" target="_blank" rel="noopener">$1</a>$2',
+            $text
+        );
+    };
+
+    $refs = function($items) use ($linkify){
+        return array_map($linkify, $items);
+    };
+
+    $this['contributors'] = 'Tom Breeze, ProPollSoil (Paolo Biella, Pilar de la Rua, Justine Dewaele, Monika Egerer, Vlontzos Georgios, Paul Hallett, Jacek Jachula, Alex Keller, Georgios Kleftodimos, Sara Diana Leonhardt, Fabio Manfedini, Edward Mitchell, Astrid Neumann, Fabrice Requier, Aleksandra Splitt, Markus Sydenham), Mirella Miettinen, Hien Ngo, Simon Potts, Tereza Prášilová Chábová, Fabiana Spinelli, Tiffany Straza, Adam Vanbergen';
+
+    $this['definitions'] = [
+        [
+            'acronym' => 'CBD',
+            'name' => 'Convention on Biological Diversity',
+            'quote' => 'The capacity of a system to absorb disturbance and reorganize while undergoing change so as to still retain essentially the same function, structure, identity, and feedbacks (Walker et al., 2004).',
+            'source' => $linkify('CBD/WG2020/5/4'),
+        ],
+        [
+            'acronym' => 'IPBES',
+            'name' => 'Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services',
+            'quote' => 'The level of disturbance that an ecosystem or society can undergo without crossing a threshold to a situation with different structure or outputs. Resilience depends on factors such as ecological dynamics as well as the organizational and institutional capacity to understand, manage, and respond to these dynamics.',
+            'source' => $linkify('https://www.ipbes.net/glossary-tag/resilience'),
+        ],
+        [
+            'acronym' => 'IPCC',
+            'name' => 'Intergovernmental Panel on Climate Change',
+            'quote' => 'The capacity of interconnected social, economic and ecological systems to cope with a hazardous event, trend or disturbance, responding or reorganizing in ways that maintain their essential function, identity and structure. Resilience is a positive attribute when it maintains capacity for adaptation, learning and/or transformation (Arctic Council, 2016).',
+            'source' => $linkify('AR6, https://apps.ipcc.ch/glossary/'),
+        ],
+        [
+            'acronym' => 'UNCCD',
+            'name' => 'United Nations Convention to Combat Desertification',
+            'quote' => 'Resilience is the capacity of a system to maintain its structure and multiple functions —ecological, health, social, economic, and cultural— in the face of shocks, disturbances, and external pressure, to quickly recover from such disruptions, to adapt to changes, and to learn from past experiences, without eroding the agency of human actors in that system to resist, reverse, or alter negative external factors or to advance equity, justice, and inclusivity within that system.',
+            'source' => $linkify('Elaydi H. 2021. Food System Resilience and Land Restorationv. UNCCD Global Land Outlook Working Paper. Bonn.'),
+        ],
+        [
+            'acronym' => 'UNDRR',
+            'name' => 'United Nations Office for Disaster Risk Reduction',
+            'quote' => 'The ability of a system, community or society exposed to hazards to resist, absorb, accommodate, adapt to, transform and recover from the effects of a hazard in a timely and efficient manner, including through the preservation and restoration of its essential basic structures and functions through risk management.',
+            'source' => $linkify('https://www.undrr.org/terminology/resilience'),
+        ],
+        [
+            'acronym' => 'FAO',
+            'name' => 'United Nations Food and Agriculture Association',
+            'quote' => 'Resilience is the ability to prevent disasters and crises, and to anticipate, absorb, accommodate or recover from them in a timely, efficient and sustainable manner. This includes protecting, restoring and improving food and agricultural systems under threats that impact food and nutrition security, agriculture, and/or food safety/public health.',
+            'source' => $linkify('http://www.fao.org/docrep/015/i2540e/i2540e00'),
+        ],
+    ];
+
+    $this['additional_resources'] = $refs([
+        'European Commission: Directorate-General for Environment, Biodiversity and resilience, Publications Office of the European Union, 2022, https://data.europa.eu/doi/10.2779/125285',
+        'Resilience Alliance. 2010. Assessing resilience in social-ecological systems: Workbook for practitioners. Version 2.0. Online: http://www.resalliance.org/3871.php Available at: https://www.resalliance.org/files/ResilienceAssessmentV2_2.pdf',
+    ]);
+
+    $this['technical_literature'] = $refs([
+        'Cambridge Institute for Sustainability Leadership, Fauna & Flora International, University of East Anglia, & UNEP-WCMC. (2017). The pollination deficit: Towards supply chain resilience in the face of pollinator decline (p. 42). UN Environment World Conservation Monitoring Centre. https://www.cisl.cam.ac.uk/system/files/documents/the-pollination-deficit.pdf',
+        'IPBES. (2016). The assessment report of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services on pollinators, pollination, and food production. Zenodo. https://doi.org/10.5281/zenodo.3402857',
+    ]);
+
+    $this['literature_groups'] = [
+        [
+            'title' => 'Underpinning literature by specific element',
+            'topics' => [
+                [
+                    'title' => 'Pollination for reproduction in up to 90% of flowering plants',
+                    'refs' => $refs([
+                        'Ollerton J, Winfree R, Tarrant S (2011) How many flowering plants are pollinated by animals? Oikos 120:321-326. https://doi.org/10.1111/j.1600-0706.2010.18644.x',
+                        'Tong ZY, Wu LY, Feng HH, Zhang M, Armbruster WS, Renner SS, Huang SQ (2023) New calculations indicate that 90% of flowering plant species are animal-pollinated. National Science Review 10:nwad219. https://doi.org/10.1093/nsr/nwad219',
+                    ]),
+                ],
+                [
+                    'title' => 'Security',
+                    'refs' => $refs([
+                        'Institute for Economics & Peace. 2025. Ecological Threat Report 2025: Analysing ecological threats, resilience & peace. Sydney, October 2025. Available from: http://visionofhumanity.org/resources (accessed August 2026)',
+                    ]),
+                ],
+                [
+                    'title' => 'Changes in pollination services',
+                    'refs' => $refs([
+                        'Kambali K, Prabhuling T, Santosh DT. 2025. Ecosystem services by insect pollinators, their crisis, and climate change effects. International Journal of Bioresource Science 12:273–291. https://doi.org/10.30954/2347-9655.02.2025.14',
+                        'Meldrum JR, Larson DL, Hoelzle TB, Hinck JE. 2024. Considering pollinators\' ecosystem services in the remediation and restoration of contaminated lands: Overview of research and its gaps. Integrated Environmental Assessment and Management 20(2):322–336. https://doi.org/10.1002/ieam.4808',
+                    ]),
+                ],
+                [
+                    'title' => 'Simulated pollinator collapse',
+                    'refs' => $refs([
+                        'Feuerbacher A. 2025. Pollinator declines, international trade and global food security: Reassessing the global economic and nutritional impacts. Ecological Economics 232:108565. https://doi.org/10.1016/j.ecolecon.2025.108565',
+                    ]),
+                ],
+                [
+                    'title' => 'Lost production, excess deaths and economic value',
+                    'refs' => $refs([
+                        'Smith MR, Mueller ND, Springmann M, Sulser TB, Garibaldi LA, Gerber J, Wiebe K, Myers SS. 2022. Pollinator deficits, food consumption, and consequences for human health: A modeling study. Environ Health Perspect. 130(12):127003. https://doi.org/10.1289/EHP10947',
+                    ]),
+                ],
+                [
+                    'title' => 'Coffee yields',
+                    'refs' => $refs([
+                        'Saturni FT, Jaffé R, Metzger JP. 2016. Landscape structure influences bee community and coffee pollination at different spatial scales. Agr Ecosyst Environ. 235(Supplement C):1–12. https://doi.org/10.1016/j.agee.2016.10.008',
+                        'Bravo-Monroy L, Tzanopoulos J, Potts SG. 2015. Ecological and social drivers of coffee pollination in Santander, Colombia. Agr Ecosyst Environ. 211:145–54. https://doi.org/10.1016/j.agee.2015.06.007',
+                    ]),
+                ],
+            ],
+        ],
+        [
+            'title' => 'Pollinators support resilience across interconnected policy priorities',
+            'topics' => [
+                [
+                    'title' => 'Smallholders',
+                    'refs' => $refs([
+                        'Stein K, Coulibaly D, Stenchly K, Goetze D, Porembski S, Lindner A, Konaté S, Linsenmair EK. 2017. Bee pollination increases yield quantity and quality of cash crops in Burkina Faso, West Africa. Scientific Reports 7:17691. https://doi.org/10.1038/s41598-017-17970-2',
+                        'Garibaldi LA, Carvalheiro LG, Vaissière BE, Gemmill-Herren B, et al. 2016. Mutually beneficial pollinator diversity and crop yield outcomes in small and large farms. Science 351:388-391. https://doi.org/10.1126/science.aac7287',
+                    ]),
+                ],
+                [
+                    'title' => 'Food and nutrition security',
+                    'refs' => $refs([
+                        'Chaplin-Kramer R, Dombeck E, Gerber J, Knuth KA, Mueller ND, Mueller M, Ziv G, Klein AM. 2014. Global malnutrition overlaps with pollinator-dependent micronutrient production. Proceedings of the Royal Society B: Biological Sciences 281(1794):20141799. https://doi.org/10.1098/rspb.2014.1799',
+                        'Ochola AC, Njoroge DM, Shao XL, Gituru RW, Wang QF, Yang CF. 2025. Global meta-analysis shows an indispensable role of pollinator diversity in promoting fruit quality. Agriculture Ecosystems & Environment 393:109829. https://doi.org/10.1016/j.agee.2025.109829',
+                        'Smith MR, Singh GM, Mozaffarian D, Myers SS. 2015. Effects of decreases of animal pollinators on human nutrition and global health: a modelling analysis. The Lancet 386:1964–1972. https://doi.org/10.1016/s0140-6736(15)61085-6',
+                        'Timberlake TP, Sapkota S, Saville NM, Cirtwill AR, et al. 2026. Pollinators support the nutrition and income of vulnerable communities. Nature 654:683–688. https://doi.org/10.1038/s41586-026-10421-x',
+                    ]),
+                ],
+                [
+                    'title' => 'Mitigation',
+                    'note' => 'See as an example how European beech tree reproduction efficiency is affected by pollination changes impacted by climate change:',
+                    'refs' => $refs([
+                        'Bogdziewicz M, Kelly D, Tanentzap AJ, Thomas P, Foest J, Lageard J, Hacket-Pain A. 2023. Reproductive collapse in European beech results from declining pollination efficiency in large trees. Global Change Biology 29:4595–4604. https://doi.org/10.1111/gcb.16730',
+                    ]),
+                ],
+                [
+                    'title' => 'Crop yields, diversity and stability',
+                    'refs' => $refs([
+                        'Bishop J, Garratt MPD, Nakagawa S. 2022. Animal pollination increases stability of crop yield across spatial scales. Ecology Letters 25:2034-2047. https://doi.org/10.1111/ele.14069',
+                        'Eeraerts M, Osterman J, Batáry P, Klein A, et al. 2025. Global synthesis of apple pollination research highlights general pollen limitation and positive contributions of wild bees compared to honeybees. Journal of Applied Ecology 62:2487-2501. https://doi.org/10.1111/1365-2664.70155',
+                        'Magrach A, Giménez-García A, Allen-Perkins A, Garibaldi LA, Bartomeus I. 2023. Increasing crop richness and reducing field sizes provide higher yields to pollinator-dependent crops. Journal of Applied Ecology 60:77-90. https://doi.org/10.1111/1365-2664.14305',
+                        'Eeraerts M, Kogan C, Isaacs R, Batáry P, et al. 2025. Wild bees mediate fruit quality via seed set in highbush blueberry: A quantitative synthesis. Agriculture Ecosystems & Environment 394:109872. https://doi.org/10.1016/j.agee.2025.109872',
+                        'Garibaldi LA, Aizen MA, Klein AM, Cunningham SA, Harder LD. 2011. Global growth and stability of agricultural yield decrease with pollinator dependence. Proceedings of the National Academy of Sciences of the United States of America 108:5909-5914. https://doi.org/10.1073/pnas.1012431108',
+                        'Woodcock BA, Garratt MPD, Powney GD, Shaw RF, et al. 2019. Meta-analysis reveals that pollinator functional diversity and abundance enhance crop pollination and yield. Nature Communications 10:1481. https://doi.org/10.1038/s41467-019-09393-6',
+                    ]),
+                ],
+                [
+                    'title' => 'Livelihoods and income',
+                    'refs' => $refs([
+                        'Raveloaritiana E, Wanger TC. 2026. Long-term agricultural diversification increases financial profitability, biodiversity, and ecosystem services: a second-order meta-analysis. Nature Communications 17:1016. https://doi.org/10.1038/s41467-025-67757-7',
+                        'Timberlake TP, Sapkota S, Saville NM, Cirtwill AR, et al. 2026. Pollinators support the nutrition and income of vulnerable communities. Nature 654:683-688. https://doi.org/10.1038/s41586-026-10421-x',
+                        'Aizen MA, Aguiar S, Biesmeijer JC, Garibaldi LA, et al. 2019. Global agricultural productivity is threatened by increasing pollinator dependence without a parallel increase in crop diversification. Global Change Biology 25: 3516–3527. https://doi.org/10.1111/gcb.14736',
+                    ]),
+                ],
+                [
+                    'title' => 'Financial systems and trade',
+                    'refs' => $refs([
+                        'Silva FDS, Carvalheiro LG, Aguirre-Gutiérrez J, Lucottte M, Guidoni-Martins K, Mertens F. 2021. Virtual pollination trade uncovers global dependence on biodiversity of developing countries. Science Advances 7:eabe6636. https://doi.org/10.1126/sciadv.abe6636',
+                        'Murphy JT, Breeze TD, Willcox B, Kavanagh S, Stout JC. 2022. Globalisation and pollinators: Pollinator declines are an economic threat to global food systems. People and Nature 4:773–785. https://doi.org/10.1002/pan3.10314',
+                    ]),
+                ],
+                [
+                    'title' => 'Micronutrients and health, wellbeing',
+                    'refs' => $refs([
+                        'Chaplin-Kramer R, Dombeck E, Gerber J, Knuth KA, Mueller ND, Mueller M, Ziv G, Klein AM. 2014. Global malnutrition overlaps with pollinator-dependent micronutrient production. Proceedings of the Royal Society B: Biological Sciences 281(1794):20141799. https://doi.org/10.1098/rspb.2014.1799',
+                        'Potts S, Imperatriz-Fonseca V, Ngo H, Aizen MA, et al. 2016. Safeguarding pollinators and their values to human well-being. Nature 540:220–229. https://doi.org/10.1038/nature20588',
+                        'Smith MR, Singh GM, Mozaffarian D, Myers SS. 2015. Effects of decreases of animal pollinators on human nutrition and global health: a modelling analysis. The Lancet 386:1964–1972. https://doi.org/10.1016/s0140-6736(15)61085-6',
+                        'Timberlake TP, Sapkota S, Saville NM, Cirtwill AR, et al. 2026. Pollinators support the nutrition and income of vulnerable communities. Nature 654:683–688. https://doi.org/10.1038/s41586-026-10421-x',
+                        'Ojija F, Bacaro G, Mgimba C. 2026. Contributions of dipterans to pollination services and biological control. Entomologia Experimentalis et Applicata 1–11. https://doi.org/10.1111/eea.70114',
+                        'Herman-Mercer NM, Loehman RA, Toohey RC, Paniyak C. 2020. Climate- and disturbance-driven changes in subsistence berries in coastal Alaska: Indigenous knowledge to inform ecological inference. Human Ecology 48:85–99 (2020). https://doi.org/10.1007/s10745-020-00138-4',
+                    ]),
+                ],
+                [
+                    'title' => 'Restoration',
+                    'note' => 'López-Cubillos et al. (2023) found that “strategic planning can capture the benefits of restoration to agricultural production through pollination services, which can lead to substantial economic benefits: up to a doubling of agricultural profits, even accounting for the lost production on restored lands”, in a case study on coffee production.',
+                    'refs' => $refs([
+                        'López-Cubillos S, McDonald-Madden E, Mayfield MM, Runting RK. 2023. Optimal restoration for pollination services increases forest cover while doubling agricultural profits. PLoS Biol 21(5): e3002107. https://doi.org/10.1371/journal.pbio.3002107',
+                    ]),
+                ],
+            ],
+        ],
+        [
+            'title' => 'Options for action',
+            'topics' => [
+                [
+                    'title' => 'Options for action',
+                    'refs' => $refs([
+                        'Guinet M, Adeux G, Cordeau S, Courson E, Nandillon R, Zhang Y, Munier-Jolain N. 2023. Fostering temporal crop diversification to reduce pesticide use. Nature Communications 14:7416. https://doi.org/10.1038/s41467-023-43234-x',
+                        'IPBES. 2016. The assessment report of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services on pollinators, pollination, and food production. Zenodo. https://doi.org/10.5281/zenodo.3402857',
+                        'Lechenet M, Dessaint F, Py G, Makowski D, Munier-Jolain N. 2017. Reducing pesticide use while preserving crop productivity and profitability on arable farms. Nature Plants 3:17008. https://doi.org/10.1038/nplants.2017.8',
+                        'MacLaren C, Mead A, van Balen D, Claessens L, et al. 2022. Long-term evidence for ecological intensification as a pathway to sustainable agriculture. Nature Sustainability 5:770–779. https://doi.org/10.1038/s41893-022-00911-x',
+                        'Priyadarshana TS, Martin EA, Sirami C, Woodcock B, et al. 2024. Crop and landscape heterogeneity increase biodiversity in agricultural landscapes: A global review and meta-analysis. Ecology Letters 27:e14412. https://doi.org/10.1111/ele.14412',
+                        'Woodcock BA, Cook S, Hulmes L, Hulmes S, et al. 2025. Agroecological farming promotes yield and biodiversity but may require subsidy to be profitable. Journal of Applied Ecology 62:1902–1913. https://doi.org/10.1111/1365-2664.70079',
+                    ]),
+                ],
+            ],
+        ],
+    ];
+}
+?>
+==
+{% component 'siteSearchInclude' %}
+<main class="pollinators-resilience">
+    <div class="container-fluid menu-container">
+        <div class="row">
+            <div class="col-md-5 col-xs-12 header-container">
+                <div class="header-bg">
+                    <h1>Pollinators &amp; Resilience</h1>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="about-menu">
+                    <div class="row">
+                        <a href="#overview" class="about-menu-item">Overview</a>
+                        <a href="#definitions" class="about-menu-item">Definitions</a>
+                        <a href="#resources" class="about-menu-item">Resources</a>
+                        <a href="#literature" class="about-menu-item">Literature</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Overview #}
+    <section id="overview" class="pr-section pr-overview">
+        <div class="container">
+            <div class="pr-intro">
+                <div class="pr-intro-text" data-aos="fade-up">
+                    <span class="pr-eyebrow">AGRI4POL Global Information Product 1</span>
+                    <p class="pr-factsheet">Pollinator Contributions to Resilience: Implications for Biodiversity, Economies, Agri-food Systems, and Livelihoods</p>
+                    <p class="pr-lead">This fact sheet was developed based on a review of global assessments and scientific literature on pollination and ecosystem services, including work by IPBES, FAO and other international organizations.</p>
+                </div>
+                <div class="pr-illustration" data-aos="fade-up">
+                    <a href="{{ 'assets/images/pollinators-resilience-factsheet.jpg'|theme }}" target="_blank" rel="noopener" class="pr-factsheet-cover" title="Open the fact sheet cover">
+                        <img src="{{ 'assets/images/pollinators-resilience-factsheet.jpg'|theme }}" alt="Cover of the fact sheet Pollinator Contributions to Resilience: Implications for Biodiversity, Economies, Agri-food Systems, and Livelihoods">
+                    </a>
+                </div>
+            </div>
+
+            <div class="pr-credits">
+                <div class="pr-card pr-contributors" data-aos="fade-up">
+                    <h3>Contributors</h3>
+                    <div class="pr-card-body">
+                        <p>{{ contributors }}</p>
+                    </div>
+                </div>
+                <div class="pr-card pr-partners" data-aos="fade-up">
+                    <h3>Project &amp; partners</h3>
+                    <div class="pr-card-body">
+                        <ul class="pr-partner-list">
+                            <li><img src="{{ 'assets/images/agri4pol-logo-trimmed.svg'|theme }}" alt="AGRI4POL"></li>
+                            <li><img src="{{ 'assets/images/butterfly-logo.webp'|theme }}" alt="Butterfly"></li>
+                            <li><img src="{{ 'assets/images/propollsoil-logo.png'|theme }}" alt="ProPollSoil"></li>
+                        </ul>
+                        <p class="pr-contact">For further information, please see <a href="https://agri4pol.eu/contact" target="_blank" rel="noopener">agri4pol.eu/contact</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Definitions #}
+    <section id="definitions" class="pr-section pr-definitions">
+        <div class="container">
+            <div class="pr-heading pr-heading-light" data-aos="fade-up">
+                <h2>Definitions of ‘resilience’</h2>
+                <p>The following selected definitions, while not comprehensive, reflect discussions of the concept of the resilience of systems in different management contexts, with many similarities across environmental and sectoral themes.</p>
+            </div>
+            <div class="pr-definition-grid">
+                {% for definition in definitions %}
+                    <article class="pr-definition" data-aos="fade-up">
+                        <header>
+                            <span class="pr-acronym">{{ definition.acronym }}</span>
+                            <span class="pr-org">{{ definition.name }}</span>
+                        </header>
+                        <blockquote>“{{ definition.quote }}”</blockquote>
+                        <p class="pr-source"><span>Source</span> {{ definition.source|raw }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {# Resources #}
+    <section id="resources" class="pr-section pr-resources">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-12" data-aos="fade-up">
+                    <div class="pr-heading">
+                        <h2>Additional resources</h2>
+                    </div>
+                    <ul class="pr-ref-list">
+                        {% for ref in additional_resources %}
+                            <li>{{ ref|raw }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-6 col-xs-12" data-aos="fade-up">
+                    <div class="pr-heading">
+                        <h2>Underpinning technical literature</h2>
+                    </div>
+                    <ul class="pr-ref-list">
+                        {% for ref in technical_literature %}
+                            <li>{{ ref|raw }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Literature by element #}
+    <section id="literature" class="pr-section pr-literature">
+        <div class="container">
+            {% for group in literature_groups %}
+            <div class="pr-lit-group" data-aos="fade-up">
+                <div class="pr-heading">
+                    <h2>{{ group.title }}</h2>
+                </div>
+                {% if group.topics|length == 1 %}
+                    <ul class="pr-ref-list pr-ref-list-cards">
+                        {% for ref in group.topics|first.refs %}
+                            <li>{{ ref|raw }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                {% for topic in group.topics %}
+                <details class="pr-topic">
+                    <summary>
+                        <span class="pr-topic-title">{{ topic.title }}</span>
+                        <span class="pr-topic-count">{{ topic.refs|length }} {{ topic.refs|length == 1 ? 'source' : 'sources' }}</span>
+                    </summary>
+                    <div class="pr-topic-body">
+                        {% if topic.note is defined and topic.note %}
+                            <p class="pr-topic-note">{{ topic.note }}</p>
+                        {% endif %}
+                        <ul class="pr-ref-list">
+                            {% for ref in topic.refs %}
+                                <li>{{ ref|raw }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </details>
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    {# Contact #}
+    <section class="pr-section pr-cta">
+        <div class="container">
+            <div class="pr-cta-box" data-aos="fade-up">
+                <div>
+                    <h2>Want to know more?</h2>
+                    <p>Get in touch with the AGRI4POL team for further information on pollinators and resilience.</p>
+                </div>
+                <a href="{{ 'contact'|page }}" class="btn btn-primary">Contact us</a>
+            </div>
+        </div>
+    </section>
+</main>

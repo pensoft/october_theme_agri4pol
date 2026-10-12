@@ -1,0 +1,23 @@
+{#
+    YouTube "facade": shows the HD thumbnail (maxresdefault, 1280x720) with a play button and only loads the
+    real player on click (see initYoutubeFacades in assets/js/app.js). The poster YouTube renders inside a
+    live iframe is a low-res image that looks blurry at card size.
+
+    Params: url   – any YouTube URL (embed/…, watch?v=…, youtu.be/…, with or without query string)
+            title – video title, used for the accessible label and the iframe title
+#}
+{% if 'v=' in url %}
+    {% set ytId = url|split('v=')[1]|split('&')|first %}
+{% else %}
+    {% set ytId = url|split('?')|first|trim('/', 'right')|split('/')|last %}
+{% endif %}
+
+<div class="yt-facade">
+    <button type="button" class="yt-facade__button" data-yt-id="{{ ytId }}" data-yt-title="{{ title }}" aria-label="Play video: {{ title }}">
+        <img class="yt-facade__thumb"
+             src="https://i.ytimg.com/vi/{{ ytId }}/maxresdefault.jpg"
+             data-fallback="https://i.ytimg.com/vi/{{ ytId }}/hqdefault.jpg"
+             width="1280" height="720" loading="lazy" alt="">
+        <span class="yt-facade__play" aria-hidden="true"></span>
+    </button>
+</div>

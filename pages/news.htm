@@ -61,6 +61,11 @@ $seoTitle = $this['article']['title'];
 $seoKeywords = $this['article']['meta_keywords'] ?: $this['article']['keywords'];
 $seoDescription = str_limit(Html::strip($this['article']['content']), 255);
 
+// SeoCmsPage (layout) runs before onStart, so its <title> still holds the page title "News"
+if ($seoTitle && ($seoComponent = $this->controller->findComponentByName('SeoCmsPage'))) {
+$seoComponent->seo_title = $seoTitle;
+}
+
 if (class_exists('\BennoThommo\Meta\Meta')) {
 if($seoTitle) {
 \BennoThommo\Meta\Meta::set('title', $seoTitle);
@@ -152,10 +157,10 @@ $this['related'] = $related;
                         <div class="share-text-desktop">Share</div>
                         <div class="social-icons">
                             {% if this.theme.bluesky %}
-                            <a href="https://bsky.app/intent/compose?text={{article.title}}20%{{page_url}}" target="_blank" class="btn pr p-primary p-bluesky normal" style="position: relative;"></a>
+                            <a href="https://bsky.app/intent/compose?text={{article.title|url_encode}}%20{{page_url|url_encode}}" target="_blank" class="btn pr p-primary p-bluesky normal" style="position: relative;"></a>
                             {% endif %}
                             {% if this.theme.twitter %}
-                            <a href="http://twitter.com/share?text={{article.title}}&url={{page_url}}" target="_blank" class="btn p-primary pr p-twitter normal"></a>
+                            <a href="http://twitter.com/share?text={{article.title|url_encode}}&url={{page_url|url_encode}}" target="_blank" class="btn p-primary pr p-twitter normal"></a>
                             {% endif %}
                             {% if this.theme.facebook %}
                             <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="btn pr p-primary p-facebook normal"></a>

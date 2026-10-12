@@ -248,6 +248,68 @@
             }
         }
 
+        .event-aside {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 448px;
+            margin: 0 auto;
+
+            // On phones the image column is moved above the text (news.less), so separate it from the title
+            .breakpoint-small-down({
+                margin-bottom: 24px;
+            });
+        }
+
+        .event-aside__image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .event-cta {
+            gap: 10px;
+            margin: 32px 0 24px;
+            font-weight: 600;
+
+            .breakpoint-small-down({
+                width: 100%;
+            });
+
+            &:focus-visible {
+                outline: 3px solid @primary-color;
+                outline-offset: 3px;
+            }
+        }
+
+        // The button sits under the cover image; on phones the image column is moved above the text,
+        // so there a second copy under the text is shown instead
+        .event-cta--aside {
+            margin: 24px 0 0;
+
+            .breakpoint-small-down({
+                display: none;
+            });
+        }
+
+        .event-cta--inline {
+            display: none;
+
+            .breakpoint-small-down({
+                display: flex;
+            });
+        }
+
+        .event-cta__icon {
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .event-cta:hover .event-cta__icon,
+        .event-cta:focus-visible .event-cta__icon {
+            transform: translate(2px, -2px);
+        }
+
         .share_container{
             display: flex;
             margin-top: 5px;

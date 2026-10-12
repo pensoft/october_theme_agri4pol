@@ -53,6 +53,11 @@ DB::raw("
 
 )->where('slug', $this->param('slug'))->first();
 
+// SeoCmsPage (layout) runs before onStart, so its <title> still holds the page title "Events"
+if ($this['entry'] && ($seoComponent = $this->controller->findComponentByName('SeoCmsPage'))) {
+$seoComponent->seo_title = $this['entry']['title'];
+}
+
 \BennoThommo\Meta\Meta::set('twitter:card', 'summary_large_image');
 \BennoThommo\Meta\Meta::set('twitter:title', $this['entry']['title']);
 \BennoThommo\Meta\Meta::set('twitter:description', str_limit(Html::strip($this['entry']['description']), 255));
@@ -198,14 +203,26 @@ $this['slug'] = $this->param('slug');
                         {{entry.description|raw}}
                     </div>
 
+                    {% if entry.url %}
+                    {% set eventCtaInner %}
+                        <span>Visit website</span>
+                        <svg class="event-cta__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M5 11L11 5M11 5H6M11 5V10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="sr-only">(opens in a new tab)</span>
+                    {% endset %}
+                    {# Phones only: the image column is moved above the text there, so keep the button under the text #}
+                    <a href="{{entry.url}}" target="_blank" rel="noopener noreferrer" class="btn btn-primary event-cta event-cta--inline">{{ eventCtaInner }}</a>
+                    {% endif %}
+
                     <div class="row share_container middle-xs">
                         <div class="share-text-desktop">Share</div>
                         <div class="social-icons">
                             {% if this.theme.bluesky %}
-                            <a href="https://bsky.app/intent/compose?text={{article.title}}20%{{page_url}}" target="_blank" class="btn pr p-primary p-bluesky normal" style="position: relative;"></a>
+                            <a href="https://bsky.app/intent/compose?text={{entry.title|url_encode}}%20{{page_url|url_encode}}" target="_blank" class="btn pr p-primary p-bluesky normal" style="position: relative;"></a>
                             {% endif %}
                             {% if this.theme.twitter %}
-                            <a href="http://twitter.com/share?text={{article.title}}&url={{page_url}}" target="_blank" class="btn p-primary pr p-twitter normal"></a>
+                            <a href="http://twitter.com/share?text={{entry.title|url_encode}}&url={{page_url|url_encode}}" target="_blank" class="btn p-primary pr p-twitter normal"></a>
                             {% endif %}
                             {% if this.theme.facebook %}
                             <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="btn pr p-primary p-facebook normal"></a>
@@ -220,16 +237,15 @@ $this['slug'] = $this->param('slug');
 
             </div>
             <div class="col-xs-12 col-md-5">
-                {% if entry.cover_image %}
-                <div class="row center-xs">
-                    <img class="left" src="{{ entry.cover_image|crop_image|resize(448, auto, { mode: 'crop' }) }}" />
+                <div class="event-aside">
+                    {% if entry.cover_image %}
+                    <img class="event-aside__image" src="{{ entry.cover_image|crop_image|resize(448, auto, { mode: 'crop' }) }}" alt="{{ entry.title }}" />
+                    {% endif %}
+
+                    {% if entry.url %}
+                    <a href="{{entry.url}}" target="_blank" rel="noopener noreferrer" class="btn btn-primary event-cta event-cta--aside">{{ eventCtaInner }}</a>
+                    {% endif %}
                 </div>
-                {% endif %}
-
-                {% if entry.url %}
-                <a href="{{entry.url}}" target="_blank" class="btn btn-primary">Visit website</a>
-                {% endif %}
-
             </div>
 
         </div>

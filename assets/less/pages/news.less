@@ -160,6 +160,74 @@
             font-family: AcariSans!important;
         }
     }
+
+    // Rich-text body (Froala editor output) — shared by news and event detail pages
+    .content {
+        // Embedded videos come with fixed width/height attributes (e.g. 560x315): keep them inside the column
+        iframe {
+            max-width: 100%;
+        }
+
+        .fr-video {
+            display: block;
+            max-width: 100%;
+        }
+
+        .fr-video iframe,
+        iframe[src*="youtube"],
+        iframe[src*="vimeo"] {
+            height: auto;
+            aspect-ratio: ~"16 / 9";
+        }
+
+        // Block images: drop the inline baseline gap under the image
+        .fr-dib img,
+        .fr-img-caption img {
+            display: block;
+        }
+
+        // Froala image with caption: <span.fr-img-caption><span.fr-img-wrap><img><span.fr-inner>caption</span></span></span>
+        // The editor writes the original image width inline (e.g. 1600px): keep it inside the column
+        .fr-img-caption {
+            display: block;
+            max-width: 100% !important;
+
+            // "Align center" in the editor
+            &.fr-fic {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .fr-img-wrap {
+                display: block;
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+                margin-bottom: 0;
+            }
+
+            // Caption text: smaller, italic and muted so it reads as a caption, not as body text
+            .fr-inner {
+                display: block;
+                margin-top: 8px;
+                font-size: 14px;
+                font-style: italic;
+                line-height: 1.5;
+                color: @grey-color;
+            }
+        }
+
+        // Caption = an italic paragraph right after an image paragraph: pull it up to the image
+        // (the negative margin collapses with the image paragraph's 20px bottom margin, leaving ~8px).
+        // Covers "<em>caption</em>" and "<strong><em>Figure 1</em></strong><em> caption</em>"
+        p:has(img) + p:has(> em:only-child),
+        p:has(img) + p:has(> strong:first-child > em:only-child) {
+            margin-top: -12px;
+            line-height: 1.5;
+        }
+    }
 }
 
  /* 
