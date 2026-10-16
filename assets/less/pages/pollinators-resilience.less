@@ -247,7 +247,7 @@
 .pr-card .pr-partner-list {
     list-style: none;
     padding: 0 !important;
-    margin: 0 0 20px 0 !important;
+    margin: 0 !important;
 
     li {
         display: flex;
@@ -259,6 +259,23 @@
 
         &:first-child {
             padding-top: 0;
+        }
+
+        // Last logo closes the card — no divider below it
+        &:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        // Link hugs the logo. The SVG logos carry width/height attributes so they keep
+        // an intrinsic size here; without them this shrink-to-fit link collapses to 0px.
+        a {
+            display: block;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+                opacity: 0.7;
+            }
         }
 
         img {
@@ -276,15 +293,6 @@
         font-weight: 700;
         color: @primary-color;
         letter-spacing: 2px;
-    }
-}
-
-.pr-card .pr-contact {
-    font-size: 14px;
-
-    a {
-        color: @link-color;
-        font-weight: 600;
     }
 }
 
@@ -416,13 +424,6 @@
             opacity: 0.7;
         }
     }
-
-    &.pr-ref-list-cards {
-        background: @white-color;
-        border-radius: @pr-card-radius;
-        box-shadow: @pr-card-shadow;
-        padding: 10px 30px !important;
-    }
 }
 
 .pr-resources {
@@ -432,115 +433,60 @@
             font-size: 24px;
         });
     }
-
-    .row > div {
-        margin-bottom: 20px;
-    }
 }
 
-// Literature — collapsible topics
+// Underpinning technical literature — one numbered block. Numbers are printed from
+// the data (not the <ol> counter) so they match the source list exactly.
 .pr-literature {
     background: @pr-soft-bg;
-
-    .pr-lit-group {
-        margin-bottom: 56px;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
 }
 
-.pr-topic {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
+.pollinators-resilience .pr-bibliography {
+    list-style: none;
+    margin: 0 !important;
+    padding: 16px 30px !important;
     background: @white-color;
     border-radius: @pr-card-radius;
     box-shadow: @pr-card-shadow;
-    margin-bottom: 16px;
-    transition: box-shadow 0.3s ease;
+    .breakpoint-medium-down({
+        padding: 8px 20px !important;
+    });
 
-    &:hover,
-    &[open] {
-        box-shadow: @pr-card-shadow-hover;
-    }
-
-    summary {
+    li {
         display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 22px 30px;
-        cursor: pointer;
-        list-style: none;
-
-        &::-webkit-details-marker {
-            display: none;
-        }
-
-        &:after {
-            content: '';
-            flex: 0 0 25px;
-            width: 25px;
-            height: 25px;
-            background: url("../../assets/images/pluc-icon.svg") no-repeat center;
-            background-size: contain;
-            transition: transform 0.3s ease;
-        }
-
-        &:focus-visible {
-            outline: 2px solid @green-color;
-            outline-offset: 2px;
-            border-radius: @pr-card-radius;
-        }
-
-        .breakpoint-medium-down({
-            padding: 18px 20px;
-            flex-wrap: wrap;
-        });
-    }
-
-    &[open] summary:after {
-        background-image: url("../../assets/images/minus-icon.svg");
-    }
-
-    .pr-topic-title {
-        flex: 1;
-        font-size: 18px;
-        font-weight: 600;
-        color: @primary-color;
-        line-height: 1.4;
-    }
-
-    .pr-topic-count {
-        flex-shrink: 0;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: @pr-accent-green;
-        background: @pr-soft-bg;
-        border-radius: 20px;
-        padding: 4px 12px;
-    }
-
-    .pr-topic-body {
-        padding: 0 30px 16px 30px;
-        border-top: 1px solid #e5e9e3;
-        .breakpoint-medium-down({
-            padding: 0 20px 12px 20px;
-        });
-    }
-
-    .pr-topic-note {
-        margin: 18px 0 4px 0;
-        padding: 14px 18px;
-        background: @pr-soft-bg;
-        border-left: 4px solid @yellow-color;
-        border-radius: 0 8px 8px 0;
+        gap: 12px;
+        margin: 0;
+        padding: 10px 0;
         font-size: 15px;
-        line-height: 1.6;
-        color: @primary-color;
+        line-height: 1.65;
+        color: #555;
+        border-bottom: 1px solid #e5e9e3;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .pr-ref-number {
+        flex: 0 0 28px;
+        text-align: right;
+        font-weight: 700;
+        color: @pr-accent-green;
+    }
+
+    .pr-ref-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    a {
+        color: @link-color;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover {
+            opacity: 0.7;
+        }
     }
 }
 
